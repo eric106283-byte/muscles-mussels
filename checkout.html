@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>結帳 — 肌肉淡菜 Muscles Mussels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: oklch(98% 0.008 290); --surface: oklch(100% 0 0); --fg: oklch(20% 0.02 270);
+      --muted: oklch(52% 0.02 270); --border: oklch(88% 0.015 280);
+      --primary: oklch(51% 0.095 285); --primary-deep: oklch(43% 0.095 285); --primary-soft: oklch(94% 0.025 285);
+      --accent: oklch(69% 0.166 51); --accent-deep: oklch(58% 0.166 51);
+      --font-display: 'Noto Serif TC', serif; --font-en: 'Cormorant Garamond', serif; --font-body: 'Noto Sans TC', sans-serif;
+      --radius-card: 14px; --radius-pill: 100px;
+      --shadow-soft: 0 2px 12px oklch(51% 0.095 285 / 0.08); --shadow-lift: 0 8px 32px oklch(51% 0.095 285 / 0.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    @keyframes page-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes page-out { to { opacity: 0; transform: translateY(-8px); } }
+    body { animation: page-in .28s ease both; }
+    body.is-leaving { animation: page-out .2s ease forwards; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+    a { color: inherit; text-decoration: none; }
+    /* Header */
+    header.site { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 30; }
+    header.site .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand .badge { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+    .brand .wordmark { display: flex; flex-direction: column; }
+    .brand .zh { font-family: var(--font-display); font-size: 15px; font-weight: 700; }
+    .brand .en { font-family: var(--font-en); font-style: italic; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+    .secure-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .secure-badge svg { color: var(--primary); }
+    /* Breadcrumb */
+    .crumb { padding-block: 12px 0; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .crumb a:hover { color: var(--primary); }
+    .crumb .sep { opacity: .4; }
+    /* Step bar */
+    .step-bar { display: flex; align-items: center; padding-block: 28px 8px; gap: 0; }
+    .step { display: flex; align-items: center; gap: 8px; flex: none; font-size: 13px; color: var(--muted); }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex: none; transition: all .2s ease; }
+    .step.is-active .step-num { background: var(--primary); border-color: var(--primary); color: white; }
+    .step.is-done .step-num { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+    .step.is-active .step-label { color: var(--fg); font-weight: 500; }
+    .step-line { flex: 1; height: 1px; background: var(--border); margin-inline: 10px; min-width: 20px; }
+    /* Layout */
+    .checkout-page { flex: 1; padding-bottom: clamp(48px, 8vw, 80px); }
+    .checkout-grid { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; padding-block: 24px; }
+    @media (max-width: 860px) { .checkout-grid { grid-template-columns: 1fr; } .order-sidebar { order: -1; } }
+    /* Card panel */
+    .checkout-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: clamp(20px, 3vw, 32px); box-shadow: var(--shadow-soft); }
+    .checkout-card h2 { font-family: var(--font-display); font-size: clamp(16px, 2vw, 19px); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+    .checkout-card h2 svg { color: var(--primary); }
+    /* Panes */
+    .pane { display: none; }
+    .pane.is-active { display: block; }
+    /* Form fields */
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 7px; }
+    .field label .req { color: var(--accent); margin-left: 2px; }
+    .field input, .field select, .field textarea { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 9px; font-family: var(--font-body); font-size: 14px; color: var(--fg); background: var(--bg); outline: none; transition: border-color .15s ease, box-shadow .15s ease; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px oklch(51% 0.095 285 / 0.1); }
+    .field input.err, .field select.err { border-color: oklch(55% 0.18 25); }
+    .field .hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+    .field textarea { resize: vertical; min-height: 72px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } .field-row3 { grid-template-columns: 1fr 1fr; } }
+    .phone-row { display: flex; gap: 0; }
+    .phone-prefix { padding: 11px 12px; background: var(--primary-soft); border: 1px solid var(--border); border-right: none; border-radius: 9px 0 0 9px; font-size: 13px; color: var(--primary); font-weight: 500; white-space: nowrap; }
+    .phone-row input { border-radius: 0 9px 9px 0; }
+    /* Shipping method */
+    .ship-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    @media (max-width: 440px) { .ship-opts { grid-template-columns: 1fr; } }
+    .ship-opt { position: relative; }
+    .ship-opt input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .ship-opt label { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: var(--radius-card); cursor: pointer; transition: all .15s ease; }
+    .ship-opt input:checked + label { border-color: var(--primary); background: var(--primary-soft); }
+    .ship-opt label svg { color: var(--muted); flex: none; }
+    .ship-opt input:checked + label svg { color: var(--primary); }
+    .ship-opt label .opt-title { font-size: 14px; font-weight: 500; }
+    .ship-opt label .opt-note { font-size: 11px; color: var(--muted); }
+    /* Payment options */
+    .pay-opts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+    .pay-opt { position: relative; }
+    .pay-opt input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .pay-opt label { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1.5px solid var(--border); border-radius: var(--radius-card); cursor: pointer; transition: all .15s ease; }
+    .pay-opt input:checked + label { border-color: var(--primary); background: var(--primary-soft); }
+    .pay-opt .pay-icon { width: 36px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: .02em; flex: none; }
+    .pay-icon.cc { background: linear-gradient(135deg, #5469d4, #a67ef1); color: white; }
+    .pay-icon.line { background: #06c755; color: white; font-size: 12px; }
+    .pay-icon.atm { background: oklch(88% 0.04 220); color: oklch(40% 0.08 220); font-size: 9px; }
+    .pay-icon.cvs { background: oklch(90% 0.06 50); color: oklch(45% 0.14 50); font-size: 9px; }
+    .pay-opt .pay-text { flex: 1; }
+    .pay-opt .pay-title { font-size: 14px; font-weight: 500; }
+    .pay-opt .pay-sub { font-size: 11px; color: var(--muted); }
+    .card-fields { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--border); display: none; }
+    .card-fields.is-open { display: block; }
+    /* Review step */
+    .review-block { margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .review-block:last-child { border-bottom: none; }
+    .review-block h3 { font-size: 13px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .review-block h3 button { font-size: 12px; color: var(--primary); background: none; border: none; cursor: pointer; font-family: var(--font-body); }
+    .review-info { font-size: 14px; line-height: 1.9; }
+    .review-item { display: flex; justify-content: space-between; align-items: center; padding-block: 7px; font-size: 14px; gap: 12px; }
+    .review-item img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex: none; }
+    .review-item .ri-name { flex: 1; }
+    .review-item .ri-sub { font-size: 12px; color: var(--muted); }
+    /* Order sidebar */
+    .order-sidebar { position: sticky; top: 80px; }
+    .summary-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .summary-header h2 { font-family: var(--font-display); font-size: 17px; }
+    .order-items { margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+    .order-item { display: flex; align-items: center; gap: 12px; padding-block: 9px; }
+    .order-item img { width: 52px; height: 52px; border-radius: 9px; object-fit: cover; flex: none; }
+    .oi-name { font-size: 13px; font-weight: 500; line-height: 1.4; }
+    .oi-spec { font-size: 11px; color: var(--muted); }
+    .oi-price { font-size: 13px; font-weight: 500; margin-left: auto; flex: none; }
+    .sum-row { display: flex; justify-content: space-between; padding-block: 6px; font-size: 14px; }
+    .sum-row.total { font-weight: 700; font-size: 16px; padding-top: 12px; margin-top: 4px; border-top: 1px solid var(--border); }
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 28px; border: none; border-radius: var(--radius-pill); font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: all .18s ease; }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); box-shadow: 0 4px 16px oklch(69% 0.166 51 / 0.3); }
+    .btn-ghost { background: none; border: 1.5px solid var(--border); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-full { width: 100%; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-deep); transform: translateY(-1px); }
+    .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); gap: 12px; }
+    /* Footer */
+    footer.site { background: var(--primary-deep); color: white; margin-top: auto; }
+    footer.site .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 20px; gap: 20px; flex-wrap: wrap; }
+    footer.site .f-brand { display: flex; align-items: center; gap: 10px; }
+    footer.site .f-brand .badge { width: 36px; height: 36px; }
+    footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+    footer.site .copy { font-size: 11px; color: oklch(92% 0.018 287 / 0.6); }
+    /* Toast */
+    .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(14px); background: var(--fg); color: white; padding: 10px 22px; border-radius: var(--radius-pill); font-size: 14px; opacity: 0; transition: all .22s cubic-bezier(.16,1,.3,1); pointer-events: none; z-index: 100; white-space: nowrap; }
+    .toast.is-shown { opacity: 1; transform: translateX(-50%) translateY(0); }
+    /* Tabbar */
+    .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: none; background: oklch(100% 0 0 / 0.94); backdrop-filter: blur(16px) saturate(1.2); border-top: 1px solid var(--border); padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+    .tabbar ul { display: flex; justify-content: space-around; }
+    .tabbar li { flex: 1; }
+    .tabbar li a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; font-size: 11px; color: var(--muted); text-decoration: none; transition: color .15s ease; }
+    .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+    .tabbar li a svg { width: 22px; height: 22px; }
+    @media (max-width: 640px) { .tabbar { display: block; } body { padding-bottom: 60px; } .step-label { display: none; } .step-num { width: 28px; height: 28px; } }
+  </style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels">
+        <span class="wordmark"><span class="zh">肌肉淡菜</span><span class="en">Muscles Mussels</span></span>
+      </a>
+      <div class="secure-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/></svg>
+        安全加密結帳
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap crumb">
+    <a href="index.html">首頁</a><span class="sep">/</span>
+    <a href="cart.html">購物車</a><span class="sep">/</span>
+    <span class="current">結帳</span>
+  </div>
+
+  <main class="checkout-page">
+    <div class="wrap">
+      <!-- Step bar -->
+      <div class="step-bar">
+        <div class="step is-active" id="step1-label">
+          <div class="step-num">1</div>
+          <div class="step-label">收件資訊</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step2-label">
+          <div class="step-num">2</div>
+          <div class="step-label">付款方式</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step3-label">
+          <div class="step-num">3</div>
+          <div class="step-label">確認送出</div>
+        </div>
+      </div>
+
+      <div class="checkout-grid">
+        <!-- Form column -->
+        <div>
+          <!-- Pane 1: Shipping -->
+          <div class="checkout-card pane is-active" id="pane-1">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>收件資訊</h2>
+            <div class="field-row">
+              <div class="field">
+                <label>收件人姓名<span class="req">*</span></label>
+                <input type="text" id="f-name" placeholder="陳小姐">
+              </div>
+              <div class="field">
+                <label>電話<span class="req">*</span></label>
+                <div class="phone-row">
+                  <span class="phone-prefix">+886</span>
+                  <input type="tel" id="f-phone" placeholder="0912-345-678">
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>電子信箱<span class="req">*</span></label>
+              <input type="email" id="f-email" placeholder="example@email.com">
+            </div>
+            <div class="field">
+              <label>寄送方式<span class="req">*</span></label>
+              <div class="ship-opts">
+                <div class="ship-opt">
+                  <input type="radio" name="ship-method" id="ship-home" value="home" checked>
+                  <label for="ship-home">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    <span><span class="opt-title">冷鏈宅配</span><br><span class="opt-note">1–2 個工作天到府</span></span>
+                  </label>
+                </div>
+                <div class="ship-opt">
+                  <input type="radio" name="ship-method" id="ship-cvs" value="cvs">
+                  <label for="ship-cvs">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 21V11M16 21V11"/></svg>
+                    <span><span class="opt-title">超商取貨</span><br><span class="opt-note">全家 / 7-ELEVEN</span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="address-fields">
+              <div class="field-row">
+                <div class="field">
+                  <label>縣市<span class="req">*</span></label>
+                  <select id="f-city">
+                    <option value="">— 請選擇 —</option>
+                    <option>台北市</option><option>新北市</option><option>基隆市</option><option>桃園市</option>
+                    <option>新竹市</option><option>新竹縣</option><option>苗栗縣</option><option>台中市</option>
+                    <option>彰化縣</option><option>南投縣</option><option>雲林縣</option><option>嘉義市</option>
+                    <option>嘉義縣</option><option>台南市</option><option>高雄市</option><option>屏東縣</option>
+                    <option>宜蘭縣</option><option>花蓮縣</option><option>台東縣</option><option>澎湖縣</option>
+                    <option>金門縣</option><option selected>連江縣</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>鄉鎮市區<span class="req">*</span></label>
+                  <input type="text" id="f-district" placeholder="如：東引鄉">
+                </div>
+              </div>
+              <div class="field">
+                <label>詳細地址<span class="req">*</span></label>
+                <input type="text" id="f-address" placeholder="路 / 街 / 巷 / 弄 / 號 / 樓">
+              </div>
+            </div>
+            <div class="field">
+              <label>備註<small style="color:var(--muted); font-weight:400">（選填）</small></label>
+              <textarea id="f-note" placeholder="例：請在下午 2–6 點配送、保冷箱置於門口…"></textarea>
+            </div>
+            <div class="nav-row">
+              <a href="cart.html" class="btn btn-ghost">← 回到購物車</a>
+              <button class="btn btn-accent" id="next-1">下一步：付款方式 →</button>
+            </div>
+          </div>
+
+          <!-- Pane 2: Payment -->
+          <div class="checkout-card pane" id="pane-2">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>付款方式</h2>
+            <div class="pay-opts">
+              <div class="pay-opt">
+                <input type="radio" name="payment" id="pay-cc" value="cc" checked>
+                <label for="pay-cc">
+                  <div class="pay-icon cc">CARD</div>
+                  <div class="pay-text"><div class="pay-title">信用卡 / 簽帳卡</div><div class="pay-sub">Visa · Mastercard · JCB</div></div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </label>
+              </div>
+              <div class="card-fields is-open" id="card-fields">
+                <div class="field">
+                  <label>卡號</label>
+                  <input type="text" id="f-card-num" placeholder="XXXX  XXXX  XXXX  XXXX" maxlength="19" inputmode="numeric">
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label>有效期限</label>
+                    <input type="text" id="f-card-exp" placeholder="MM / YY" maxlength="7" inputmode="numeric">
+                  </div>
+                  <div class="field">
+                    <label>安全碼（CVV）</label>
+                    <input type="text" id="f-card-cvv" placeholder="123" maxlength="4" inputmode="numeric">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>持卡人姓名</label>
+                  <input type="text" id="f-card-name" placeholder="如信用卡上所示">
+                </div>
+              </div>
+              <div class="pay-opt">
+                <input type="radio" name="payment" id="pay-line" value="line">
+                <label for="pay-line">
+                  <div class="pay-icon line">LINE</div>
+                  <div class="pay-text"><div class="pay-title">LINE Pay</div><div class="pay-sub">確認後跳轉 LINE 完成付款</div></div>
+                </label>
+              </div>
+              <div class="pay-opt">
+                <input type="radio" name="payment" id="pay-atm" value="atm">
+                <label for="pay-atm">
+                  <div class="pay-icon atm">ATM</div>
+                  <div class="pay-text"><div class="pay-title">ATM 轉帳</div><div class="pay-sub">訂單成立後提供虛擬帳號，3 天內完成轉帳</div></div>
+                </label>
+              </div>
+              <div class="pay-opt">
+                <input type="radio" name="payment" id="pay-cvs" value="cvs">
+                <label for="pay-cvs">
+                  <div class="pay-icon cvs">CVS</div>
+                  <div class="pay-text"><div class="pay-title">超商代碼繳費</div><div class="pay-sub">超商多媒體機列印繳費單，3 天內完成繳費</div></div>
+                </label>
+              </div>
+            </div>
+            <div class="nav-row">
+              <button class="btn btn-ghost" id="back-2">← 上一步</button>
+              <button class="btn btn-accent" id="next-2">下一步：確認訂單 →</button>
+            </div>
+          </div>
+
+          <!-- Pane 3: Review -->
+          <div class="checkout-card pane" id="pane-3">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>確認訂單</h2>
+            <div class="review-block">
+              <h3>商品明細</h3>
+              <div class="review-item">
+                <img src="images/p-mussel-l.webp" alt="">
+                <div class="ri-name">活體淡菜・大規格 L<br><span class="ri-sub">5 kg × $380</span></div>
+                <strong>$1,900</strong>
+              </div>
+              <div class="review-item">
+                <img src="images/p-oyster.webp" alt="">
+                <div class="ri-name">日本兵庫縣生食級生蠔<br><span class="ri-sub">6 顆 × $120</span></div>
+                <strong>$720</strong>
+              </div>
+              <div class="review-item">
+                <img src="images/p-barnacle.webp" alt="">
+                <div class="ri-name">佛手藤壺<br><span class="ri-sub">1 盒 × $1,100</span></div>
+                <strong>$1,100</strong>
+              </div>
+              <div class="sum-row" style="padding-top:14px; border-top:1px solid var(--border); margin-top:8px;"><span>商品小計</span><strong>$3,720</strong></div>
+              <div class="sum-row"><span>運費</span><span style="color:var(--primary); font-size:13px;">免運（滿 $1,000）</span></div>
+              <div class="sum-row total"><span>應付總額</span><span style="color:var(--accent); font-size:18px;">$3,720</span></div>
+            </div>
+            <div class="review-block">
+              <h3>收件資訊 <button onclick="goStep(1)">修改</button></h3>
+              <div class="review-info" id="review-shipping">—</div>
+            </div>
+            <div class="review-block">
+              <h3>付款方式 <button onclick="goStep(2)">修改</button></h3>
+              <div class="review-info" id="review-payment">—</div>
+            </div>
+            <div class="nav-row">
+              <button class="btn btn-ghost" id="back-3">← 上一步</button>
+              <button class="btn btn-accent btn-full" id="place-order" style="max-width:280px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/></svg>
+                確認下單
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order sidebar -->
+        <aside class="order-sidebar">
+          <div class="checkout-card">
+            <div class="summary-header">
+              <h2 style="margin:0; font-size:16px;">訂單摘要</h2>
+              <span style="font-size:12px; color:var(--muted);">3 件商品</span>
+            </div>
+            <div class="order-items">
+              <div class="order-item">
+                <img src="images/p-mussel-l.webp" alt="活體淡菜大規格L">
+                <div><div class="oi-name">活體淡菜・大規格 L</div><div class="oi-spec">5 kg</div></div>
+                <span class="oi-price">$1,900</span>
+              </div>
+              <div class="order-item">
+                <img src="images/p-oyster.webp" alt="生食級生蠔">
+                <div><div class="oi-name">日本兵庫縣生食級生蠔</div><div class="oi-spec">6 顆</div></div>
+                <span class="oi-price">$720</span>
+              </div>
+              <div class="order-item">
+                <img src="images/p-barnacle.webp" alt="佛手藤壺">
+                <div><div class="oi-name">佛手藤壺</div><div class="oi-spec">1 盒</div></div>
+                <span class="oi-price">$1,100</span>
+              </div>
+            </div>
+            <div class="sum-row"><span>商品小計</span><span>$3,720</span></div>
+            <div class="sum-row"><span>運費</span><span style="color:var(--primary)">免運</span></div>
+            <div class="sum-row total"><span>應付總額</span><span style="color:var(--accent)">$3,720</span></div>
+            <div style="margin-top:14px; padding:10px 14px; background:var(--primary-soft); border-radius:9px; font-size:12px; color:var(--primary); display:flex; align-items:center; gap:7px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/></svg>
+              冷鏈直送・到貨保新鮮
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="f-brand">
+        <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+        <span><span class="zh" style="display:block">肌肉淡菜</span><span class="en" style="font-family:var(--font-en); font-style:italic; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:oklch(92% 0.018 287 / 0.6)">Muscles Mussels</span></span>
+      </div>
+      <span class="copy">© 2026 肌肉淡菜 Muscles Mussels · 馬祖高登海域 領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <nav class="tabbar" aria-label="主要功能">
+    <ul>
+      <li><a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>商品</a></li>
+      <li><a href="index.html#search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>搜尋</a></li>
+      <li class="is-active"><a href="cart.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>購物車</a></li>
+      <li><a href="account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的</a></li>
+    </ul>
+  </nav>
+
+<script>
+  let currentStep = 1;
+  const toast = document.getElementById('toast');
+  let toastTimer;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-shown');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2400);
+  }
+
+  function goStep(n) {
+    // Deactivate all
+    [1,2,3].forEach(i => {
+      document.getElementById(`pane-${i}`).classList.toggle('is-active', i === n);
+      const lbl = document.getElementById(`step${i}-label`);
+      lbl.classList.remove('is-active', 'is-done');
+      if (i === n) lbl.classList.add('is-active');
+      else if (i < n) lbl.classList.add('is-done');
+    });
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function validateStep1() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const city = document.getElementById('f-city').value;
+    const district = document.getElementById('f-district').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    const shipMethod = document.querySelector('input[name="ship-method"]:checked').value;
+    if (!name) { showToast('請填寫收件人姓名'); document.getElementById('f-name').classList.add('err'); return false; }
+    if (!phone || !/^\d{9,10}$/.test(phone.replace(/[-\s]/g, ''))) { showToast('請填寫正確的電話號碼'); document.getElementById('f-phone').classList.add('err'); return false; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('請填寫正確的電子信箱'); document.getElementById('f-email').classList.add('err'); return false; }
+    if (shipMethod === 'home') {
+      if (!city) { showToast('請選擇縣市'); document.getElementById('f-city').classList.add('err'); return false; }
+      if (!district) { showToast('請填寫鄉鎮市區'); document.getElementById('f-district').classList.add('err'); return false; }
+      if (!address) { showToast('請填寫詳細地址'); document.getElementById('f-address').classList.add('err'); return false; }
+    }
+    return true;
+  }
+
+  function populateReview() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const city = document.getElementById('f-city').value;
+    const district = document.getElementById('f-district').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    const shipMethod = document.querySelector('input[name="ship-method"]:checked').value;
+    let shippingText = `${name}　+886 ${phone}　${email}<br>`;
+    if (shipMethod === 'home') shippingText += `冷鏈宅配　${city}${district}${address}`;
+    else shippingText += `超商取貨`;
+    document.getElementById('review-shipping').innerHTML = shippingText;
+
+    const pay = document.querySelector('input[name="payment"]:checked').value;
+    const payLabels = { cc: '信用卡 / 簽帳卡', line: 'LINE Pay', atm: 'ATM 轉帳', cvs: '超商代碼繳費' };
+    let payText = payLabels[pay] || pay;
+    if (pay === 'cc') {
+      const num = document.getElementById('f-card-num').value.trim().slice(-4);
+      if (num) payText += `（末四碼：${num}）`;
+    }
+    document.getElementById('review-payment').innerHTML = payText;
+  }
+
+  // Step navigation
+  document.getElementById('next-1').addEventListener('click', () => {
+    document.querySelectorAll('.err').forEach(e => e.classList.remove('err'));
+    if (validateStep1()) goStep(2);
+  });
+  document.getElementById('back-2').addEventListener('click', () => goStep(1));
+  document.getElementById('next-2').addEventListener('click', () => { populateReview(); goStep(3); });
+  document.getElementById('back-3').addEventListener('click', () => goStep(2));
+  document.getElementById('place-order').addEventListener('click', () => {
+    const btn = document.getElementById('place-order');
+    btn.disabled = true;
+    btn.textContent = '處理中…';
+    setTimeout(() => {
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = 'order-success.html'; }, 200);
+    }, 900);
+  });
+
+  // Card number formatting
+  document.getElementById('f-card-num').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '').slice(0, 16);
+    this.value = v.match(/.{1,4}/g)?.join('  ') || v;
+  });
+  document.getElementById('f-card-exp').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+    this.value = v;
+  });
+
+  // Payment option toggle card fields
+  document.querySelectorAll('input[name="payment"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('card-fields').classList.toggle('is-open', r.value === 'cc' && r.checked);
+    });
+  });
+
+  // Shipping method toggle address fields
+  document.querySelectorAll('input[name="ship-method"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('address-fields').style.display = r.value === 'home' ? 'block' : 'none';
+    });
+  });
+
+  // Page transition links
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href.startsWith('#') && !href.startsWith('javascript')) {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(() => { window.location.href = href; }, 200);
+      });
+    }
+  });
+</script>
+</body>
+</html>

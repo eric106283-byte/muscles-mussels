@@ -1,0 +1,412 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>收貨地址 — 肌肉淡菜 MUSCLES MUSSELS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           oklch(98% 0.007 81);
+    --surface:      oklch(100% 0 0);
+    --fg:           oklch(29% 0.034 287);
+    --muted:        oklch(50% 0.03 287);
+    --border:       oklch(90% 0.012 287);
+    --primary:      oklch(51% 0.095 285);
+    --primary-deep: oklch(36% 0.048 289);
+    --primary-soft: oklch(64% 0.083 287);
+    --accent:       oklch(69% 0.166 51);
+    --accent-deep:  oklch(58% 0.155 48);
+    --font-display: 'Noto Serif TC', 'Iowan Old Style', Georgia, serif;
+    --font-en:      'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', system-ui, sans-serif;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px -16px oklch(29% 0.034 287 / 0.28);
+    --shadow-lift: 0 20px 48px -18px oklch(29% 0.034 287 / 0.34);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
+
+  header.site {
+    position: sticky; top: 0; z-index: 40;
+    background: oklch(98% 0.007 81 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 46px; height: 46px; flex: none; }
+  .brand .wordmark { display: flex; flex-direction: column; line-height: 1.18; }
+  .brand .wordmark .zh { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.06em; color: var(--fg); }
+  .brand .wordmark .en { font-family: var(--font-en); font-style: italic; font-size: 12px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
+  nav.primary { display: flex; align-items: center; gap: 30px; }
+  nav.primary a { font-size: 14.5px; color: var(--muted); transition: color .15s ease; }
+  nav.primary a:hover { color: var(--fg); }
+  @media (max-width: 880px) { nav.primary { display: none; } }
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface);
+    color: var(--fg); position: relative; transition: border-color .15s ease, transform .15s ease;
+  }
+  .icon-btn:hover { border-color: var(--primary-soft); transform: translateY(-1px); }
+  .icon-btn.is-active { border-color: var(--accent); color: var(--accent); }
+  .icon-btn .dot {
+    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 10px; display: grid; place-items: center;
+    font-family: var(--font-body); border: 2px solid var(--bg);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.03em;
+    padding: 11px 24px; border-radius: var(--radius-pill); border: 1px solid transparent;
+    cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-accent { background: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 14px 32px -12px oklch(69% 0.166 51 / 0.55); }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-outline { border-color: var(--border); color: var(--fg); background: var(--surface); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-text { border: none; background: none; color: var(--muted); padding: 6px 4px; font-size: 13px; }
+  .btn-text:hover { color: var(--primary); }
+
+  .crumb { padding-block: 22px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+  .crumb a:hover { color: var(--primary); }
+  .crumb span.sep { opacity: 0.5; }
+  .crumb span.current { color: var(--fg); }
+
+  .account-page { padding-bottom: clamp(56px, 8vw, 96px); }
+  .account-grid { display: grid; grid-template-columns: 256px 1fr; gap: clamp(28px, 4vw, 48px); align-items: start; }
+  @media (max-width: 880px) { .account-grid { grid-template-columns: 1fr; } }
+
+  .acc-side {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    box-shadow: var(--shadow-soft); padding: 22px; position: sticky; top: 96px;
+  }
+  .acc-side .who { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+  .acc-side .avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+    color: oklch(99% 0.01 90); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; flex: none;
+  }
+  .acc-side .who h2 { font-size: 15px; font-weight: 500; }
+  .acc-side .who p { font-size: 12px; color: var(--muted); }
+  .acc-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 11px 14px; border-radius: 12px;
+    font-size: 14px; color: var(--muted); transition: background .15s ease, color .15s ease;
+  }
+  .acc-nav a:hover { background: var(--bg); color: var(--fg); }
+  .acc-nav a.is-active { background: oklch(51% 0.095 285 / 0.1); color: var(--primary); font-weight: 500; }
+  .acc-nav a svg { flex: none; }
+  .acc-nav li + li { margin-top: 4px; }
+
+  .account-main h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 30px); margin-bottom: 6px; }
+  .account-main > .head-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: clamp(22px, 3vw, 32px); }
+  .account-main > .head-row .lede { color: var(--muted); font-size: 14px; }
+
+  .addr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .addr-grid { grid-template-columns: 1fr; } }
+
+  .addr-card {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    box-shadow: var(--shadow-soft); padding: 22px; position: relative; transition: opacity .25s ease, transform .25s ease;
+  }
+  .addr-card.is-removing { opacity: 0; transform: scale(.97); }
+  .addr-card.is-default { border-color: var(--primary-soft); box-shadow: 0 0 0 3px oklch(51% 0.095 285 / 0.1), var(--shadow-soft); }
+  .addr-card .top-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .addr-card .name { font-size: 15.5px; font-weight: 500; }
+  .addr-card .tag-pill {
+    font-size: 11px; padding: 4px 11px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .addr-card .tag-pill.is-default { color: var(--primary); border-color: var(--primary-soft); background: oklch(51% 0.095 285 / 0.08); }
+  .addr-card .phone { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .addr-card .addr-text { font-size: 13.5px; color: var(--fg); max-width: 42ch; }
+  .addr-card .actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+  .add-card {
+    border: 1.5px dashed var(--border); border-radius: var(--radius-card); background: transparent;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    padding: 40px 22px; color: var(--muted); cursor: pointer; transition: border-color .15s ease, color .15s ease, background .15s ease;
+    width: 100%; font-family: var(--font-body); font-size: 14px;
+  }
+  .add-card:hover { border-color: var(--primary-soft); color: var(--primary); background: oklch(51% 0.095 285 / 0.04); }
+  .add-card .plus {
+    width: 42px; height: 42px; border-radius: 50%; border: 1.5px dashed currentColor;
+    display: grid; place-items: center; font-size: 20px;
+  }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(120%);
+    background: var(--primary-deep); color: oklch(97% 0.012 287);
+    padding: 14px 26px; border-radius: var(--radius-pill); font-size: 13.5px;
+    box-shadow: var(--shadow-lift); transition: transform .35s cubic-bezier(.22,.61,.36,1);
+    z-index: 80; white-space: nowrap;
+  }
+  .toast.is-shown { transform: translateX(-50%) translateY(0); }
+
+  @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .account-main h1, .addr-card, .add-card { animation: fade-up 0.6s cubic-bezier(.22,.61,.36,1) both; }
+  .addr-card:nth-child(1) { animation-delay: .06s; }
+  .addr-card:nth-child(2) { animation-delay: .11s; }
+  .addr-card:nth-child(3) { animation-delay: .16s; }
+  .add-card { animation-delay: .21s; }
+  @media (prefers-reduced-motion: reduce) { body, .account-main h1, .addr-card, .add-card, .addr-card.is-removing { animation: none !important; transition: none !important; } }
+  @keyframes page-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes page-out { to { opacity: 0; transform: translateY(-8px); } }
+  body { animation: page-in .28s ease both; }
+  body.is-leaving { animation: page-out .2s ease forwards; }
+
+  footer.site { background: var(--primary-deep); color: oklch(94% 0.015 287); padding-block: 36px; }
+  footer.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  footer.site .f-brand { display: flex; align-items: center; gap: 12px; }
+  footer.site .f-brand .badge { width: 36px; height: 36px; }
+  footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  footer.site .f-brand .en { font-family: var(--font-en); font-style: italic; font-size: 11px; letter-spacing: 0.2em; color: oklch(92% 0.018 287 / 0.6); text-transform: uppercase; }
+  footer.site .copy { color: oklch(92% 0.018 287 / 0.6); }
+  /* ── Mobile bottom tabbar ───────────────────────────── */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: none; background: oklch(100% 0 0 / 0.94); backdrop-filter: blur(16px) saturate(1.2); border-top: 1px solid var(--border); padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+  .tabbar ul { display: flex; justify-content: space-around; }
+  .tabbar li { flex: 1; }
+  .tabbar li a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; font-size: 11px; color: var(--muted); text-decoration: none; transition: color .15s ease; }
+  .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+  .tabbar li a svg { width: 22px; height: 22px; }
+  @media (max-width: 640px) { .tabbar { display: block; } body { padding-bottom: 60px; } }
+  /* ── Mobile member nav ──────────────────────────────── */
+  .acc-nav-mobile { display: none; }
+  @media (max-width: 880px) {
+    .acc-side { display: none; }
+    .acc-nav-mobile { display: flex; overflow-x: auto; gap: 8px; padding: 0 0 16px; margin-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .acc-nav-mobile::-webkit-scrollbar { display: none; }
+    .acc-nav-mobile a { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 13px; color: var(--muted); background: var(--surface); flex: none; text-decoration: none; transition: all .15s ease; }
+    .acc-nav-mobile a.is-active { background: var(--primary); border-color: var(--primary); color: white; font-weight: 500; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels 品牌標誌">
+        <span class="wordmark">
+          <span class="zh">肌肉淡菜</span>
+          <span class="en">Muscles Mussels</span>
+        </span>
+      </a>
+      <nav class="primary">
+        <a href="index.html">首頁</a>
+        <a href="index.html#categories">海鮮分類</a>
+        <a href="index.html#catalog">商品目錄</a>
+        <a href="about.html">品牌故事</a>
+        <a href="index.html#contact">聯絡我們</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn is-active" href="account.html" aria-label="會員中心">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4.5"/></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="購物車">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="dot" id="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap crumb">
+    <a href="index.html">首頁</a><span class="sep">/</span>
+    <a href="account.html">會員中心</a><span class="sep">/</span>
+    <span class="current">收貨地址</span>
+  </div>
+
+  <main class="account-page">
+    <div class="wrap">
+      <div class="account-grid">
+        <aside class="acc-side">
+          <div class="who">
+            <span class="avatar">陳</span>
+            <div>
+              <h2>陳小姐</h2>
+              <p>chen@example.com</p>
+            </div>
+          </div>
+          <ul class="acc-nav">
+            <li><a href="account.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>會員首頁</a></li>
+            <li><a href="orders.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0h12l-1 13H7L6 7Z"/></svg>我的訂單</a></li>
+            <li><a href="addresses.html" class="is-active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.9-7-10a7 7 0 0 1 14 0c0 5.1-7 10-7 10Z"/><circle cx="12" cy="11" r="2.4"/></svg>收貨地址</a></li>
+            <li><a href="favorites.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>我的收藏</a></li>
+            <li><a href="settings.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5c.04-.5.04-1 0-1.5l1.6-1.4-1.6-2.8-2 .6a7.6 7.6 0 0 0-1.3-.75L15.6 5h-3.2l-.5 2.65c-.46.18-.9.43-1.3.75l-2-.6-1.6 2.8 1.6 1.4a6 6 0 0 0 0 1.5l-1.6 1.4 1.6 2.8 2-.6c.4.32.84.57 1.3.75l.5 2.65h3.2l.5-2.65c.46-.18.9-.43 1.3-.75l2 .6 1.6-2.8-1.6-1.4Z"/></svg>帳戶設定</a></li>
+            <li><a href="login.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>登出</a></li>
+          </ul>
+        </aside>
+
+        <div class="account-main">
+          <nav class="acc-nav-mobile" aria-label="會員選單">
+            <a href="account.html">會員首頁</a>
+            <a href="orders.html">我的訂單</a>
+            <a href="addresses.html" class="is-active">收貨地址</a>
+            <a href="favorites.html">我的收藏</a>
+            <a href="settings.html">帳戶設定</a>
+          </nav>
+          <div class="head-row">
+            <div>
+              <h1>收貨地址</h1>
+              <p class="lede">管理常用配送地址，結帳時可快速選用。</p>
+            </div>
+          </div>
+
+          <div class="addr-grid" id="addr-grid">
+            <article class="addr-card is-default">
+              <div class="top-row">
+                <span class="name">陳小姐</span>
+                <span class="tag-pill is-default">預設地址</span>
+                <span class="tag-pill">住家</span>
+              </div>
+              <p class="phone">0912-345-678</p>
+              <p class="addr-text">104 台北市中山區南京東路二段 88 號 6 樓</p>
+              <div class="actions">
+                <button class="btn btn-outline" type="button" data-action="edit">編輯</button>
+                <button class="btn btn-text" type="button" data-action="remove" disabled title="預設地址無法刪除">刪除</button>
+              </div>
+            </article>
+
+            <article class="addr-card">
+              <div class="top-row">
+                <span class="name">陳小姐</span>
+                <span class="tag-pill">公司</span>
+              </div>
+              <p class="phone">02-2771-2345</p>
+              <p class="addr-text">106 台北市大安區忠孝東路四段 170 號 12 樓之 3</p>
+              <div class="actions">
+                <button class="btn btn-outline" type="button" data-action="edit">編輯</button>
+                <button class="btn btn-outline" type="button" data-action="set-default">設為預設</button>
+                <button class="btn btn-text" type="button" data-action="remove">刪除</button>
+              </div>
+            </article>
+
+            <article class="addr-card">
+              <div class="top-row">
+                <span class="name">陳先生</span>
+                <span class="tag-pill">親友收件</span>
+              </div>
+              <p class="phone">0922-888-666</p>
+              <p class="addr-text">242 新北市新莊區中正路 365 號</p>
+              <div class="actions">
+                <button class="btn btn-outline" type="button" data-action="edit">編輯</button>
+                <button class="btn btn-outline" type="button" data-action="set-default">設為預設</button>
+                <button class="btn btn-text" type="button" data-action="remove">刪除</button>
+              </div>
+            </article>
+
+            <button type="button" class="add-card" id="add-address">
+              <span class="plus">+</span>
+              新增收貨地址
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="f-brand">
+        <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+        <span><span class="zh" style="display:block">肌肉淡菜</span><span class="en">Muscles Mussels</span></span>
+      </div>
+      <span class="copy">© 2026 肌肉淡菜 Muscles Mussels · 馬祖高登海域 領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">已更新</div>
+
+<script>
+  const grid = document.getElementById('addr-grid');
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-shown');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2200);
+  }
+
+  grid.addEventListener('click', e => {
+    const card = e.target.closest('.addr-card');
+    const btn = e.target.closest('button[data-action]');
+    if (!btn || btn.disabled) return;
+    const name = card.querySelector('.name').textContent;
+    const action = btn.dataset.action;
+
+    if (action === 'set-default') {
+      grid.querySelectorAll('.addr-card').forEach(c => {
+        c.classList.remove('is-default');
+        const pill = c.querySelector('.tag-pill.is-default');
+        if (pill) pill.remove();
+        const removeBtn = c.querySelector('[data-action="remove"]');
+        if (removeBtn) { removeBtn.disabled = false; removeBtn.removeAttribute('title'); }
+        const setBtn = c.querySelector('[data-action="set-default"]');
+        if (setBtn) setBtn.style.display = '';
+      });
+      card.classList.add('is-default');
+      const topRow = card.querySelector('.top-row');
+      const pill = document.createElement('span');
+      pill.className = 'tag-pill is-default';
+      pill.textContent = '預設地址';
+      topRow.insertBefore(pill, topRow.children[1]);
+      const removeBtn = card.querySelector('[data-action="remove"]');
+      removeBtn.disabled = true;
+      removeBtn.title = '預設地址無法刪除';
+      const setBtn = card.querySelector('[data-action="set-default"]');
+      if (setBtn) setBtn.style.display = 'none';
+      showToast(`已將「${name}」設為預設地址`);
+    } else if (action === 'edit') {
+      showToast(`已開啟「${name}」的編輯表單`);
+    } else if (action === 'remove') {
+      card.classList.add('is-removing');
+      setTimeout(() => { card.remove(); showToast('已刪除地址'); }, 220);
+    }
+  });
+
+  document.getElementById('add-address').addEventListener('click', () => {
+    showToast('已開啟新增地址表單');
+  });
+
+  // Page exit transitions
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto')) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, 200);
+    });
+  });
+</script>
+
+<nav class="tabbar" aria-label="主要功能">
+  <ul>
+    <li><a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>商品
+    </a></li>
+    <li><a href="index.html#search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>搜尋
+    </a></li>
+    <li><a href="cart.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>購物車
+    </a></li>
+    <li class="is-active"><a href="account.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的
+    </a></li>
+  </ul>
+</nav>
+</body>
+</html>

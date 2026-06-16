@@ -1,0 +1,1392 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>肌肉淡菜 MUSCLES MUSSELS — 嚴選海鮮直送</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           oklch(98% 0.007 81);
+    --surface:      oklch(100% 0 0);
+    --fg:           oklch(29% 0.034 287);
+    --muted:        oklch(50% 0.03 287);
+    --border:       oklch(90% 0.012 287);
+    --primary:      oklch(51% 0.095 285);
+    --primary-deep: oklch(36% 0.048 289);
+    --primary-soft: oklch(64% 0.083 287);
+    --accent:       oklch(69% 0.166 51);
+    --accent-deep:  oklch(58% 0.155 48);
+
+    --font-display: 'Noto Serif TC', 'Iowan Old Style', Georgia, serif;
+    --font-en:      'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', system-ui, sans-serif;
+
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px -16px oklch(29% 0.034 287 / 0.28);
+    --shadow-lift: 0 20px 48px -18px oklch(29% 0.034 287 / 0.34);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  .wrap {
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 64px);
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Announcement strip                                          */
+  /* ---------------------------------------------------------- */
+  .strip {
+    background: var(--primary-deep);
+    color: oklch(94% 0.015 287);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+  .strip .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 9px;
+  }
+  .strip .accent-dot { color: var(--accent); }
+  .strip .strip-right { display: flex; gap: 24px; opacity: 0.78; }
+  @media (max-width: 640px) { .strip .strip-right { display: none; } }
+
+  /* ---------------------------------------------------------- */
+  /* Header                                                       */
+  /* ---------------------------------------------------------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: oklch(98% 0.007 81 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 14px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 46px; height: 46px; flex: none; }
+  .brand .wordmark { display: flex; flex-direction: column; line-height: 1.18; }
+  .brand .wordmark .zh {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0.06em;
+    color: var(--fg);
+  }
+  .brand .wordmark .en {
+    font-family: var(--font-en);
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  nav.primary { display: flex; align-items: center; gap: 30px; }
+  nav.primary a {
+    font-size: 14.5px;
+    color: var(--muted);
+    transition: color .15s ease;
+    position: relative;
+  }
+  nav.primary a:hover { color: var(--fg); }
+  nav.primary a.is-active { color: var(--primary); font-weight: 500; }
+  nav.primary a.is-active::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -18px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  @media (max-width: 880px) { nav.primary { display: none; } }
+
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--fg);
+    position: relative;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .icon-btn:hover { border-color: var(--primary-soft); transform: translateY(-1px); }
+  .icon-btn .dot {
+    position: absolute; top: -2px; right: -2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    display: grid; place-items: center;
+    font-family: var(--font-body);
+    border: 2px solid var(--bg);
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Hero                                                         */
+  /* ---------------------------------------------------------- */
+  .hero {
+    background:
+      radial-gradient(1100px 520px at 84% -10%, oklch(64% 0.083 287 / 0.35), transparent 60%),
+      linear-gradient(155deg, var(--primary-deep) 0%, var(--primary) 78%);
+    color: oklch(97% 0.012 287);
+    overflow: clip;
+    position: relative;
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(32px, 5vw, 80px);
+    align-items: center;
+    padding-block: clamp(56px, 9vw, 108px);
+  }
+  .hero .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: oklch(86% 0.05 60);
+    margin-bottom: 22px;
+  }
+  .hero .eyebrow::before {
+    content: ""; width: 28px; height: 1px; background: var(--accent);
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 5.4vw, 60px);
+    line-height: 1.28;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    font-family: var(--font-en);
+    font-style: italic;
+    font-size: 0.92em;
+  }
+  .hero p.lede {
+    margin-top: 22px;
+    max-width: 46ch;
+    font-size: 16.5px;
+    color: oklch(92% 0.018 287);
+  }
+  .hero .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 14px 30px;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-accent { background: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 14px 32px -12px oklch(69% 0.166 51 / 0.55); }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-ghost-light { border-color: oklch(97% 0.012 287 / 0.34); color: oklch(97% 0.012 287); }
+  .btn-ghost-light:hover { border-color: oklch(97% 0.012 287 / 0.7); background: oklch(97% 0.012 287 / 0.08); }
+  .btn-primary { background: var(--primary); color: oklch(98% 0.01 90); }
+  .btn-primary:hover { background: var(--primary-deep); transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+  .btn-outline { border-color: var(--border); color: var(--fg); background: var(--surface); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  .hero-art {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+    border: 1px solid oklch(97% 0.012 287 / 0.16);
+    overflow: hidden;
+    box-shadow: var(--shadow-lift);
+  }
+  .hero-art img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    animation: hero-ken-burns 26s ease-in-out infinite alternate;
+  }
+  .hero-art::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(195deg, oklch(36% 0.048 289 / 0.18), oklch(36% 0.048 289 / 0.5) 100%);
+  }
+  .hero-art .ring {
+    position: absolute; inset: 14%;
+    border: 1px solid oklch(97% 0.012 287 / 0.18);
+    border-radius: 18px;
+    animation: hero-ring-breathe 7s ease-in-out infinite;
+  }
+
+  @keyframes hero-ken-burns {
+    from { transform: scale(1) translate3d(0, 0, 0); }
+    to   { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
+  }
+  @keyframes hero-ring-breathe {
+    0%, 100% { opacity: 0.55; inset: 14%; }
+    50%      { opacity: 1;    inset: 12%; }
+  }
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero .eyebrow,
+  .hero h1,
+  .hero p.lede,
+  .hero .cta-row,
+  .hero-art {
+    animation: hero-fade-up 0.9s cubic-bezier(.22,.61,.36,1) both;
+  }
+  .hero .eyebrow   { animation-delay: 0.05s; }
+  .hero h1         { animation-delay: 0.16s; }
+  .hero p.lede     { animation-delay: 0.28s; }
+  .hero .cta-row   { animation-delay: 0.4s; }
+  .hero-art        { animation-delay: 0.22s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-art img,
+    .hero-art .ring,
+    .hero .eyebrow,
+    .hero h1,
+    .hero p.lede,
+    .hero .cta-row,
+    .hero-art {
+      animation: none;
+    }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Trust strip                                                  */
+  /* ---------------------------------------------------------- */
+  .trust {
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .trust .wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 26px clamp(8px, 2vw, 28px);
+    border-left: 1px solid var(--border);
+  }
+  .trust-item:first-child { border-left: none; }
+  .trust-item .num {
+    font-family: var(--font-en);
+    font-size: 26px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .trust-item .label { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .trust-item .label strong { display: block; color: var(--fg); font-size: 14.5px; font-weight: 500; margin-bottom: 2px; }
+  @media (max-width: 880px) {
+    .trust .wrap { grid-template-columns: repeat(2, 1fr); }
+    .trust-item:nth-child(3) { border-left: none; }
+    .trust-item:nth-child(2), .trust-item:nth-child(4) { border-left: 1px solid var(--border); }
+    .trust-item { border-top: 1px solid var(--border); }
+    .trust-item:nth-child(1), .trust-item:nth-child(2) { border-top: none; }
+  }
+  @media (max-width: 540px) {
+    .trust .wrap { grid-template-columns: 1fr; }
+    .trust-item, .trust-item:nth-child(2), .trust-item:nth-child(4) { border-left: none; }
+    .trust-item:nth-child(2) { border-top: 1px solid var(--border); }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Section heading pattern                                     */
+  /* ---------------------------------------------------------- */
+  .section { padding-block: clamp(56px, 8vw, 96px); }
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  .section-head .kicker {
+    font-family: var(--font-en);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 10px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(26px, 3.6vw, 38px);
+    letter-spacing: 0.03em;
+  }
+  .section-head p { color: var(--muted); font-size: 14.5px; max-width: 42ch; margin-top: 8px; }
+  .section-head .more { font-size: 14px; color: var(--primary); white-space: nowrap; padding-bottom: 4px; }
+  .section-head .more:hover { color: var(--accent-deep); }
+  @media (max-width: 640px) {
+    .section-head { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Category tiles                                               */
+  /* ---------------------------------------------------------- */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.4vw, 28px);
+  }
+  .cat-card {
+    position: relative;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .cat-card .ph {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .cat-card .ph img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .cat-card:hover .ph img { transform: scale(1.04); }
+  .cat-card .ph::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(190deg, oklch(29% 0.034 287 / 0.08), oklch(29% 0.034 287 / 0.62));
+  }
+  .cat-card .info {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 22px;
+    background: linear-gradient(0deg, oklch(20% 0.03 287 / 0.78), transparent 80%);
+    color: oklch(98% 0.01 90);
+  }
+  .cat-card .info .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background: oklch(98% 0.01 90 / 0.16);
+    border: 1px solid oklch(98% 0.01 90 / 0.3);
+    margin-bottom: 10px;
+    backdrop-filter: blur(6px);
+  }
+  .cat-card .info h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: 0.04em;
+  }
+  .cat-card .info p { font-size: 12.5px; color: oklch(98% 0.01 90 / 0.72); margin-top: 4px; }
+  @media (max-width: 880px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .cat-grid { grid-template-columns: 1fr; } .cat-card { aspect-ratio: 16/10; } }
+
+  /* ---------------------------------------------------------- */
+  /* Filter / search bar (catalog)                                */
+  /* ---------------------------------------------------------- */
+  .catalog-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 16px 22px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    margin-bottom: 28px;
+  }
+  .filter-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+  .pill {
+    font-size: 13.5px;
+    padding: 9px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--bg);
+    transition: all .15s ease;
+    cursor: pointer;
+  }
+  .pill:hover { border-color: var(--primary-soft); color: var(--fg); }
+  .pill.is-active { background: var(--primary); border-color: var(--primary); color: oklch(98% 0.01 90); font-weight: 500; }
+  .search-field {
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 10px 18px;
+    min-width: 240px;
+    color: var(--muted);
+    font-size: 13.5px;
+    background: var(--bg);
+  }
+  .search-field svg { width: 16px; height: 16px; flex: none; opacity: .6; }
+  @media (max-width: 640px) { .search-field { min-width: 0; flex: 1 1 100%; } }
+
+  /* ---------------------------------------------------------- */
+  /* Product grid                                                 */
+  /* ---------------------------------------------------------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2vw, 26px);
+  }
+  .p-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .p-card .card-link { position: absolute; inset: 0; z-index: 1; }
+  .p-card .media, .p-card .body { position: relative; z-index: 2; pointer-events: none; }
+  .p-card .media .fav, .p-card .media .add-btn, .p-card .row .add-btn { pointer-events: auto; }
+  .p-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); border-color: oklch(90% 0.012 287 / 0.4); }
+  .p-card .media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: oklch(91% 0.018 287);
+    overflow: hidden;
+  }
+  .p-card .media .p-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease;
+  }
+  .p-card:hover .media .p-photo { transform: scale(1.045); }
+  .p-card .media .stock-tag {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 11px; letter-spacing: 0.1em;
+    padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    color: oklch(99% 0.01 90);
+  }
+  .stock-tag.live { background: var(--primary); }
+  .stock-tag.fresh { background: var(--accent); }
+  .stock-tag.frozen { background: var(--primary-soft); }
+  .p-card .media .fav {
+    position: absolute; top: 10px; right: 10px;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: oklch(100% 0 0 / 0.8);
+    backdrop-filter: blur(6px);
+    color: var(--muted);
+  }
+  .p-card .body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .p-card .cat-label { font-size: 11.5px; letter-spacing: 0.14em; color: var(--accent-deep); text-transform: uppercase; }
+  .p-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.4; }
+  .p-card .spec { font-size: 12.5px; color: var(--muted); }
+  .p-card .row {
+    margin-top: auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .p-card .price { font-family: var(--font-en); font-size: 21px; font-weight: 600; color: var(--fg); }
+  .p-card .price small { font-family: var(--font-body); font-size: 11.5px; color: var(--muted); font-weight: 400; margin-left: 3px; }
+  .add-btn {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: oklch(99% 0.01 90);
+    border: none;
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .add-btn:hover { background: var(--accent); transform: scale(1.07); }
+
+  @media (max-width: 1080px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px)  { .product-grid { grid-template-columns: 1fr; } .p-card { flex-direction: row; } .p-card .media { width: 132px; aspect-ratio: 1/1; flex: none; } .p-card .body { padding: 14px 16px; } }
+
+  .load-more { display: flex; justify-content: center; margin-top: 40px; }
+
+  /* ---------------------------------------------------------- */
+  /* Featured banner                                              */
+  /* ---------------------------------------------------------- */
+  .feature-banner {
+    border-radius: 22px;
+    background: linear-gradient(115deg, var(--primary-deep), var(--primary) 60%, oklch(58% 0.13 60) 130%);
+    color: oklch(97% 0.012 287);
+    padding: clamp(32px, 5vw, 56px);
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-banner::after {
+    content: "";
+    position: absolute; right: -60px; top: -80px;
+    width: 260px; height: 260px;
+    border: 1px solid oklch(97% 0.012 287 / 0.16);
+    border-radius: 50%;
+  }
+  .feature-banner .kicker { color: var(--accent); font-family: var(--font-en); font-style: italic; letter-spacing: 0.18em; font-size: 13px; text-transform: uppercase; margin-bottom: 12px; }
+  .feature-banner h3 { font-family: var(--font-display); font-size: clamp(24px, 3.2vw, 32px); font-weight: 700; line-height: 1.4; max-width: 22ch; }
+  .feature-banner p { margin-top: 12px; color: oklch(92% 0.018 287); font-size: 14.5px; max-width: 48ch; }
+  .feature-banner .cta-row { margin-top: 24px; display: flex; gap: 12px; }
+  .feature-stats { display: flex; flex-direction: column; gap: 18px; }
+  .feature-stats .stat { display: flex; align-items: baseline; gap: 12px; border-bottom: 1px solid oklch(97% 0.012 287 / 0.18); padding-bottom: 14px; }
+  .feature-stats .stat .v { font-family: var(--font-en); font-size: 30px; font-weight: 600; color: var(--accent); }
+  .feature-stats .stat .l { font-size: 13px; color: oklch(92% 0.018 287 / 0.8); }
+  @media (max-width: 760px) { .feature-banner { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------- */
+  /* Design language reference section                           */
+  /* ---------------------------------------------------------- */
+  .dlang {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .dlang-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(20px, 3vw, 36px);
+  }
+  .dlang-block h4 {
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 16px;
+    font-family: var(--font-en); font-style: italic;
+  }
+  .swatch-row { display: flex; flex-direction: column; gap: 10px; }
+  .swatch { display: flex; align-items: center; gap: 12px; }
+  .swatch .chip { width: 34px; height: 34px; border-radius: 10px; border: 1px solid oklch(0% 0 0 / 0.06); flex: none; }
+  .swatch .meta { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .swatch .meta strong { display: block; color: var(--fg); font-size: 13px; font-weight: 500; }
+
+  .type-sample { display: flex; flex-direction: column; gap: 14px; }
+  .type-sample .ts-row { display: flex; align-items: baseline; gap: 14px; }
+  .type-sample .ts-row .lab { font-size: 11px; color: var(--muted); width: 64px; flex: none; letter-spacing: 0.08em; }
+  .type-sample .ts-row .ex { font-family: var(--font-display); font-weight: 700; }
+  .type-sample .ts-row.h1 .ex { font-size: 26px; }
+  .type-sample .ts-row.h2 .ex { font-size: 19px; }
+  .type-sample .ts-row.body .ex { font-family: var(--font-body); font-weight: 400; font-size: 14px; }
+  .type-sample .ts-row.cap .ex { font-family: var(--font-en); font-style: italic; font-size: 13px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+
+  .btn-sample { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .card-sample {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .card-sample strong { color: var(--fg); display: block; margin-bottom: 6px; font-size: 13px; font-family: var(--font-display); }
+
+  @media (max-width: 980px) { .dlang-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .dlang-grid { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------- */
+  /* Footer                                                       */
+  /* ---------------------------------------------------------- */
+  footer.site {
+    background: var(--primary-deep);
+    color: oklch(92% 0.018 287);
+  }
+  footer.site .wrap {
+    padding-block: 56px 28px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  footer.site .f-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  footer.site .f-brand .badge { width: 40px; height: 40px; }
+  footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: oklch(97% 0.012 287); }
+  footer.site .f-brand .en { font-family: var(--font-en); font-style: italic; font-size: 11px; letter-spacing: 0.2em; color: oklch(92% 0.018 287 / 0.6); text-transform: uppercase; }
+  footer.site p.tag { font-size: 13px; color: oklch(92% 0.018 287 / 0.66); max-width: 34ch; }
+  footer.site h5 { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: oklch(92% 0.018 287 / 0.55); margin-bottom: 16px; font-family: var(--font-en); font-style: italic; }
+  footer.site ul { display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: oklch(94% 0.015 287 / 0.85); }
+  footer.site ul a:hover { color: var(--accent); }
+  .f-bottom {
+    border-top: 1px solid oklch(97% 0.012 287 / 0.14);
+    padding-block: 20px;
+    font-size: 12px;
+    color: oklch(92% 0.018 287 / 0.5);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  @media (max-width: 760px) { footer.site .wrap { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { footer.site .wrap { grid-template-columns: 1fr; } }
+
+  /* ---------------------------------------------------------- */
+  /* Bottom tab bar — mobile app shell                            */
+  /* ---------------------------------------------------------- */
+  .tabbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    display: none;
+    background: oklch(100% 0 0 / 0.94);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border-top: 1px solid var(--border);
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
+  }
+  .tabbar ul { display: flex; justify-content: space-around; }
+  .tabbar li { flex: 1; }
+  .tabbar li a {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 6px 4px; font-size: 11px; color: var(--muted);
+    text-decoration: none; transition: color .15s ease;
+  }
+  .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+  .tabbar li a svg { width: 22px; height: 22px; }
+  @media (max-width: 640px) {
+    .tabbar { display: block; }
+    body { padding-bottom: 60px; }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Scroll reveal                                                */
+  /* ---------------------------------------------------------- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.68s cubic-bezier(.22,.61,.36,1), transform 0.68s cubic-bezier(.22,.61,.36,1);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+  .cat-grid [data-reveal]:nth-child(2) { transition-delay: 0.1s; }
+  .cat-grid [data-reveal]:nth-child(3) { transition-delay: 0.2s; }
+  .product-grid [data-reveal]:nth-child(2) { transition-delay: 0.07s; }
+  .product-grid [data-reveal]:nth-child(3) { transition-delay: 0.14s; }
+  .product-grid [data-reveal]:nth-child(4) { transition-delay: 0.21s; }
+  .product-grid [data-reveal]:nth-child(6) { transition-delay: 0.07s; }
+  .product-grid [data-reveal]:nth-child(7) { transition-delay: 0.14s; }
+  .product-grid [data-reveal]:nth-child(8) { transition-delay: 0.21s; }
+  .trust .wrap [data-reveal]:nth-child(2) { transition-delay: 0.08s; }
+  .trust .wrap [data-reveal]:nth-child(3) { transition-delay: 0.16s; }
+  .trust .wrap [data-reveal]:nth-child(4) { transition-delay: 0.24s; }
+  .dlang-grid [data-reveal]:nth-child(2) { transition-delay: 0.1s; }
+  .dlang-grid [data-reveal]:nth-child(3) { transition-delay: 0.2s; }
+  .dlang-grid [data-reveal]:nth-child(4) { transition-delay: 0.3s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Header: shrink on scroll                                    */
+  /* ---------------------------------------------------------- */
+  header.site { transition: box-shadow .3s ease, background .3s ease; }
+  header.site.is-scrolled {
+    box-shadow: 0 4px 28px -8px oklch(29% 0.034 287 / 0.15);
+    background: oklch(98% 0.007 81 / 0.97);
+  }
+  header.site .badge { transition: width .3s ease, height .3s ease; }
+  header.site.is-scrolled .badge { width: 38px; height: 38px; }
+
+  /* ---------------------------------------------------------- */
+  /* Fav toggle heart animation                                  */
+  /* ---------------------------------------------------------- */
+  @keyframes heart-beat { 0%,100%{transform:scale(1)} 35%{transform:scale(1.45)} 60%{transform:scale(1.18)} }
+  .fav { cursor: pointer; color: var(--muted); transition: color .2s ease; }
+  .fav.is-faved { color: oklch(60% 0.21 25); }
+  .fav.is-faved svg { animation: heart-beat 0.38s cubic-bezier(.22,.61,.36,1); }
+  .fav.is-faved svg path { fill: oklch(60% 0.21 25); stroke: oklch(60% 0.21 25); }
+
+  /* ---------------------------------------------------------- */
+  /* Add-to-cart ripple                                          */
+  /* ---------------------------------------------------------- */
+  .add-btn { overflow: hidden; position: relative; }
+  @keyframes ripple-out { to { transform: scale(5); opacity: 0; } }
+  .ripple {
+    position: absolute; border-radius: 50%;
+    width: 20px; height: 20px;
+    margin-top: -10px; margin-left: -10px;
+    background: oklch(99% 0.01 90 / 0.55);
+    transform: scale(0);
+    animation: ripple-out 0.45s ease-out forwards;
+    pointer-events: none;
+  }
+
+  /* ---------------------------------------------------------- */
+  /* Cart badge bounce                                           */
+  /* ---------------------------------------------------------- */
+  @keyframes badge-pop { 0%,100%{transform:scale(1)} 40%{transform:scale(1.5)} }
+  .dot.is-pop { animation: badge-pop 0.32s cubic-bezier(.22,.61,.36,1); }
+
+  /* ---------------------------------------------------------- */
+  /* Skeleton cards                                              */
+  /* ---------------------------------------------------------- */
+  .p-card.is-skeleton { pointer-events: none; border-color: var(--border); }
+  .p-card.is-skeleton .media, .p-card.is-skeleton .body { position: static; }
+  @keyframes sk-shimmer {
+    0%   { background-position: -700px 0; }
+    100% { background-position: 700px 0; }
+  }
+  .sk {
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--border) 25%, oklch(96% 0.006 81) 50%, var(--border) 75%);
+    background-size: 1400px 100%;
+    animation: sk-shimmer 1.6s linear infinite;
+  }
+  .sk-img { height: 200px; border-radius: 0; margin-bottom: 0; }
+  .sk-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .sk-line { height: 13px; }
+  .sk-title { height: 18px; width: 75%; }
+  .sk-spec { height: 11px; width: 88%; }
+  .sk-price { height: 20px; width: 42%; }
+  .sk-btn { width: 38px; height: 38px; border-radius: 50%; flex: none; }
+  .p-card.is-skeleton .row { padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+
+  /* ---------------------------------------------------------- */
+  /* Page transition                                              */
+  /* ---------------------------------------------------------- */
+  @keyframes page-in  { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes page-out { to   { opacity:0; transform:translateY(-6px); } }
+  body { animation: page-in 0.42s cubic-bezier(.22,.61,.36,1) both; }
+  body.is-leaving { animation: page-out 0.2s ease forwards; pointer-events: none; }
+
+  /* ---------------------------------------------------------- */
+  /* Trust micro-hover                                           */
+  /* ---------------------------------------------------------- */
+  .trust-item { transition: background .2s ease; }
+  .trust-item:hover { background: oklch(97.5% 0.012 287); }
+  .trust-item:hover .num { color: var(--accent-deep); }
+  .trust-item .num { transition: color .2s ease; }
+</style>
+</head>
+<body>
+
+  <!-- Announcement strip -->
+  <div class="strip">
+    <div class="wrap">
+      <span><span class="accent-dot">●</span>&nbsp; 台灣首個淡菜全生態系品牌・馬祖高登海域直送</span>
+      <span class="strip-right">
+        <span>領有執照合法養殖</span>
+        <span>客服専線 0800-388-588</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site">
+    <div class="wrap">
+      <a href="#top" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels 品牌標誌">
+        <span class="wordmark">
+          <span class="zh">肌肉淡菜</span>
+          <span class="en">Muscles Mussels</span>
+        </span>
+      </a>
+
+      <nav class="primary">
+        <a href="#top" class="is-active">首頁</a>
+        <a href="#categories">海鮮分類</a>
+        <a href="#catalog">商品目錄</a>
+        <a href="about.html">品牌故事</a>
+        <a href="#contact">聯絡我們</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="icon-btn" href="#search" aria-label="搜尋">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </a>
+        <a class="icon-btn" href="login.html" aria-label="會員登入">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4.5"/></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="購物車">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="dot">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">馬祖高登海域 · 台灣首個淡菜全生態系品牌</span>
+        <h1>一桶，吃進<br>整片<em>&nbsp;馬祖海&nbsp;</em></h1>
+        <p class="lede">高蛋白 × 零腥味 × 馬祖直送——這不只是行銷詞，是肌肉淡菜每一口的真實樣貌。淡菜不是台灣人不愛，而是從來沒有機會，吃到真正新鮮的那一口。我們從馬祖出發，以專業冷鏈守住活體的鮮甜，把海洋最原始的力量，原封不動地送上您的餐桌。</p>
+        <div class="cta-row">
+          <a href="#catalog" class="btn btn-accent">
+            瀏覽商品目錄
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="about.html" class="btn btn-ghost-light">了解品牌故事</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="images/hero.webp" alt="肌肉淡菜品牌桶裝活體淡菜，馬祖漁港實拍" loading="eager">
+        <div class="ring"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust bar -->
+  <section class="trust">
+    <div class="wrap">
+      <div class="trust-item" data-reveal><span class="num tabular">馬祖</span><span class="label"><strong>高登海域直養</strong>潮間帶天然淡菜棲地</span></div>
+      <div class="trust-item" data-reveal><span class="num tabular">No.1</span><span class="label"><strong>領有執照合法養殖</strong>合法立案・永續經營</span></div>
+      <div class="trust-item" data-reveal><span class="num tabular">Arg+</span><span class="label"><strong>紫貽貝精胺酸優勢</strong>高蛋白海洋滋養來源</span></div>
+      <div class="trust-item" data-reveal><span class="num tabular">F·P·H</span><span class="label"><strong>Fresh · Power · Honesty</strong>品牌三大支柱，誠實標示每一口</span></div>
+    </div>
+  </section>
+
+  <!-- Category navigation -->
+  <section class="section" id="categories">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="kicker">A Whole Mussel Ecosystem</p>
+          <h2>一座淡菜全生態系，三種品味方式</h2>
+          <p>從馬祖高登海域的活體鮮品，到職人釀製的海味與風土好酒，肌肉淡菜建立起台灣首個淡菜全生態系品牌——點選分類即可快速篩選對應商品。</p>
+        </div>
+        <a href="#catalog" class="more">查看全部商品 →</a>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-card live" href="#catalog" data-reveal>
+          <div class="ph"><img src="images/cat-live.webp" alt="馬祖高登海域漁工現流採收活體淡菜" loading="lazy"></div>
+          <div class="info">
+            <span class="tag">高登海域現流到貨</span>
+            <h3>活體鮮品</h3>
+            <p>活體淡菜（L／M／S）、佛手藤壺、生蠔</p>
+          </div>
+        </a>
+        <a class="cat-card frozen-sea" href="#catalog" data-reveal>
+          <div class="ph"><img src="images/cat-preserves.webp" alt="淡菜干貝醬與淡菜烏魚子醬手工封罐，置於現流淡菜上" loading="lazy"></div>
+          <div class="info">
+            <span class="tag">職人釀製・小批次</span>
+            <h3>釀製海味</h3>
+            <p>淡菜干貝醬、淡菜烏魚子醬</p>
+          </div>
+        </a>
+        <a class="cat-card frozen-food" href="#catalog" data-reveal>
+          <div class="ph"><img src="images/cat-brew.webp" alt="老陳啤瓶裝實品照" loading="lazy"></div>
+          <div class="info">
+            <span class="tag">限量陳放</span>
+            <h3>風土釀造</h3>
+            <p>老陳啤・馬祖風土滋味</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section class="section" id="catalog">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="kicker">The Full Catalogue</p>
+          <h2>商品目錄</h2>
+          <p>依分類、產地或處理方式篩選，掌握每項商品的規格與到貨狀態。</p>
+        </div>
+      </div>
+
+      <div class="catalog-bar">
+        <div class="filter-pills">
+          <span class="pill is-active">全部商品</span>
+          <span class="pill">活體鮮品</span>
+          <span class="pill">釀製海味</span>
+          <span class="pill">風土釀造</span>
+          <span class="pill">熱門排序</span>
+        </div>
+        <label class="search-field" id="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <span>搜尋品名、規格或產地⋯</span>
+        </label>
+      </div>
+
+      <div class="product-grid">
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag live">現流到貨</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-mussel-l.webp" alt="活體淡菜大規格 L 級，盛盤呈現馬祖海景" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">活體鮮品</span>
+            <h3>活體淡菜・大規格 L</h3>
+            <p class="spec">規格｜殼徑 12cm 以上・最低 5kg 起訂・馬祖高登海域現流直送</p>
+            <div class="row">
+              <span class="price tabular">$380<small>/kg</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag fresh">產地直送</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-mussel-m.webp" alt="活體淡菜中規格 M 級，漁工自竹簍中拾取現流淡菜" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">活體鮮品</span>
+            <h3>活體淡菜・中規格 M</h3>
+            <p class="spec">規格｜殼徑 10–12cm・最低 5kg 起訂・家庭常備份量</p>
+            <div class="row">
+              <span class="price tabular">$330<small>/kg</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag frozen">急凍直出</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-mussel-s.webp" alt="活體淡菜小規格 S 級，品牌桶裝置於漁港木棧道" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">活體鮮品</span>
+            <h3>活體淡菜・小規格 S</h3>
+            <p class="spec">規格｜殼徑 10cm 以下・最低 5kg 起訂・適合湯品快炒</p>
+            <div class="row">
+              <span class="price tabular">$310<small>/kg</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag frozen">急凍直出</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-barnacle.webp" alt="馬祖佛手藤壺蒸煮後盛盤" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">活體鮮品</span>
+            <h3>佛手藤壺</h3>
+            <p class="spec">規格｜500g/盒・潮間帶野生珍味・建議蒸煮取肉食用</p>
+            <div class="row">
+              <span class="price tabular">$1,100<small>/盒</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag live">現流到貨</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-oyster.webp" alt="生蠔與海味料理拼盤" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">活體鮮品</span>
+            <h3>日本兵庫縣生食級生蠔</h3>
+            <p class="spec">規格｜1顆/盒・生食等級・冷藏配送到府</p>
+            <div class="row">
+              <span class="price tabular">$120<small>/顆</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag frozen">職人釀製</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-sauce-scallop.webp" alt="淡菜干貝醬手工封罐，置於現流淡菜上" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">釀製海味</span>
+            <h3>淡菜干貝醬</h3>
+            <p class="spec">規格｜240g/罐・活淡菜＋整顆干貝・拌麵拌飯皆宜</p>
+            <div class="row">
+              <span class="price tabular">$380<small>/罐</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag frozen">職人釀製</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-sauce-mullet.webp" alt="淡菜烏魚子醬手工封罐，置於現流淡菜上" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">釀製海味</span>
+            <h3>淡菜烏魚子醬</h3>
+            <p class="spec">規格｜240g/罐・台味鹹香精緻醬・年節送禮首選</p>
+            <div class="row">
+              <span class="price tabular">$380<small>/罐</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card" data-reveal>
+          <a class="card-link" href="product.html" aria-label="查看商品詳情"></a>
+          <div class="media">
+            <span class="stock-tag frozen">限量陳放</span>
+            <span class="fav">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <img class="p-photo" src="images/p-beer.webp" alt="老陳啤瓶裝實品照" loading="lazy">
+          </div>
+          <div class="body">
+            <span class="cat-label">風土釀造</span>
+            <h3>老陳啤</h3>
+            <p class="spec">規格｜紅麥芽＋馬祖老酒精釀・限量釀造・陳放熟成</p>
+            <div class="row">
+              <span class="price tabular">$180<small>/瓶</small></span>
+              <button class="add-btn" aria-label="加入購物車">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card is-skeleton" aria-hidden="true">
+          <div class="media"><div class="sk sk-img"></div></div>
+          <div class="sk-body">
+            <div class="sk sk-line" style="width:42%"></div>
+            <div class="sk sk-title"></div>
+            <div class="sk sk-spec"></div>
+            <div class="row">
+              <div class="sk sk-price"></div>
+              <div class="sk sk-btn"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card is-skeleton" aria-hidden="true">
+          <div class="media"><div class="sk sk-img"></div></div>
+          <div class="sk-body">
+            <div class="sk sk-line" style="width:38%"></div>
+            <div class="sk sk-title" style="width:65%"></div>
+            <div class="sk sk-spec" style="width:80%"></div>
+            <div class="row">
+              <div class="sk sk-price"></div>
+              <div class="sk sk-btn"></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="load-more">
+        <button class="btn btn-outline">載入更多商品</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured banner -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="feature-banner" data-reveal>
+        <div>
+          <p class="kicker">Limited by Nature, Not by Choice</p>
+          <h3>淡菜不是台灣不愛，<br>而是沒機會吃到真的新鮮。</h3>
+          <p>我們從馬祖出發，把最純淨海域裡的活體鮮味，以專業冷鏈技術原汁原味送到您手上——讓海洋的力量，走進每一個人的日常生活。</p>
+          <div class="cta-row">
+            <a href="#catalog" class="btn btn-accent">今天吃海味，從肌肉淡菜開始！</a>
+          </div>
+        </div>
+        <div class="feature-stats">
+          <div class="stat"><span class="v tabular">馬祖高登</span><span class="l">台灣首個淡菜全生態系品牌的產地原鄉</span></div>
+          <div class="stat"><span class="v tabular">合法立案</span><span class="l">領有執照的淡菜養殖場域</span></div>
+          <div class="stat"><span class="v tabular">Fresh·Power·Honesty</span><span class="l">三大支柱，貫徹從產地到餐桌的誠實</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design language reference -->
+  <section class="dlang section" id="design-language">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="kicker">Reusable Design Language</p>
+          <h2>設計語彙參照</h2>
+          <p>以下為本次視覺系統萃取出的色票、按鈕、卡片與字體層級，後續購物車、訂單、登入頁將延續同一套語彙。</p>
+        </div>
+      </div>
+      <div class="dlang-grid">
+
+        <div class="dlang-block" data-reveal>
+          <h4>Color · 色票</h4>
+          <div class="swatch-row">
+            <div class="swatch"><span class="chip" style="background:var(--primary)"></span><span class="meta"><strong>品牌紫 Primary</strong>#615E9B · 主要按鈕／連結／強調文字</span></div>
+            <div class="swatch"><span class="chip" style="background:var(--primary-deep)"></span><span class="meta"><strong>深紫 Primary Deep</strong>大面積品牌背景（Hero／頁尾）</span></div>
+            <div class="swatch"><span class="chip" style="background:var(--accent)"></span><span class="meta"><strong>品牌橘 Accent</strong>#E87722 · CTA／價格標籤／稀少性提示</span></div>
+            <div class="swatch"><span class="chip" style="background:var(--bg);border-color:var(--border)"></span><span class="meta"><strong>米白 Background</strong>#FAF7F2 · 內容區底色</span></div>
+            <div class="swatch"><span class="chip" style="background:var(--fg)"></span><span class="meta"><strong>深墨紫 Foreground</strong>標題／內文主色</span></div>
+          </div>
+        </div>
+
+        <div class="dlang-block" data-reveal>
+          <h4>Typography · 字體層級</h4>
+          <div class="type-sample">
+            <div class="ts-row h1"><span class="lab">Display</span><span class="ex">一桶馬祖海</span></div>
+            <div class="ts-row h2"><span class="lab">Heading</span><span class="ex">活體鮮品分類</span></div>
+            <div class="ts-row body"><span class="lab">Body</span><span class="ex">馬祖高登海域，領有執照合法養殖。</span></div>
+            <div class="ts-row cap"><span class="lab">Caption</span><span class="ex">Fresh · Power · Honesty</span></div>
+          </div>
+        </div>
+
+        <div class="dlang-block" data-reveal>
+          <h4>Button · 按鈕樣式</h4>
+          <div class="btn-sample">
+            <span class="btn btn-primary" style="pointer-events:none">主要按鈕 Primary</span>
+            <span class="btn btn-accent" style="pointer-events:none">強調按鈕 Accent / CTA</span>
+            <span class="btn btn-outline" style="pointer-events:none">次要按鈕 Outline</span>
+          </div>
+        </div>
+
+        <div class="dlang-block" data-reveal>
+          <h4>Card · 卡片樣式</h4>
+          <div class="card-sample">
+            <strong>商品卡片 Product Card</strong>
+            純白面・1px 邊框・16px 圓角・圖片區佔比 ≥ 60%・hover 上浮 3px 並加柔光陰影。分類色僅作標籤點綴，避免整卡上色。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site" id="contact">
+    <div class="wrap">
+      <div>
+        <div class="f-brand">
+          <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+          <span>
+            <span class="zh" style="display:block">肌肉淡菜</span>
+            <span class="en">Muscles Mussels</span>
+          </span>
+        </div>
+        <p class="tag">台灣首個淡菜全生態系品牌，深耕馬祖高登海域、領有執照合法養殖。一桶，吃進整片馬祖海——這是我們對 Fresh、Power、Honesty 的承諾。</p>
+      </div>
+      <div>
+        <h5>商品分類</h5>
+        <ul>
+          <li><a href="#categories">活體海鮮</a></li>
+          <li><a href="#categories">冷凍海鮮</a></li>
+          <li><a href="#categories">冷凍食品</a></li>
+          <li><a href="#catalog">本週現流</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>關於我們</h5>
+        <ul>
+          <li><a href="about.html">品牌故事</a></li>
+          <li><a href="about.html#pillars">全生態系理念</a></li>
+          <li><a href="about.html#trace">合法養殖與分級制度</a></li>
+          <li><a href="about.html#origin">馬祖高登海域</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>客戶服務</h5>
+        <ul>
+          <li><a href="#contact">常見問題</a></li>
+          <li><a href="#contact">配送與退換貨</a></li>
+          <li><a href="#contact">企業採購洽詢</a></li>
+          <li><a href="#contact">客服専線 0800-388-588</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap f-bottom">
+      <span>© 2026 肌肉淡菜 Muscles Mussels. All rights reserved.</span>
+      <span>馬祖高登海域 直養基地・領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──────────────────────────────────────────
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+
+    // ── Header shrink on scroll ────────────────────────────────
+    const siteHeader = document.querySelector('header.site');
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+      const headerShrinkObs = new IntersectionObserver(
+        ([e]) => siteHeader.classList.toggle('is-scrolled', !e.isIntersecting),
+        { threshold: 0 }
+      );
+      headerShrinkObs.observe(heroSection);
+    }
+
+    // ── Fav button toggle ──────────────────────────────────────
+    document.querySelectorAll('.p-card .fav').forEach(btn => {
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        btn.classList.toggle('is-faved');
+      });
+    });
+
+    // ── Add-to-cart ripple + badge bump ────────────────────────
+    const cartBadge = document.querySelector('header .dot');
+    let cartQty = parseInt(cartBadge?.textContent || '0', 10);
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const rect = btn.getBoundingClientRect();
+        r.style.left = (e.clientX - rect.left) + 'px';
+        r.style.top  = (e.clientY - rect.top)  + 'px';
+        btn.appendChild(r);
+        r.addEventListener('animationend', () => r.remove(), { once: true });
+        if (cartBadge) {
+          cartQty++;
+          cartBadge.textContent = cartQty;
+          cartBadge.classList.remove('is-pop');
+          void cartBadge.offsetWidth;
+          cartBadge.classList.add('is-pop');
+          cartBadge.addEventListener('animationend', () => cartBadge.classList.remove('is-pop'), { once: true });
+        }
+      });
+    });
+
+    // ── Page transition ────────────────────────────────────────
+    document.querySelectorAll('a[href]').forEach(a => {
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('javascript') || a.target) return;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(() => { window.location.href = href; }, 210);
+      });
+    });
+
+    // ── Skeleton fade-out ──────────────────────────────────────
+    function clearSkeletons() {
+      document.querySelectorAll('.p-card.is-skeleton').forEach(sk => {
+        sk.style.transition = 'opacity 0.5s ease';
+        sk.style.opacity = '0';
+        setTimeout(() => sk.remove(), 520);
+      });
+    }
+    if (document.readyState === 'complete') {
+      clearSkeletons();
+    } else {
+      window.addEventListener('load', clearSkeletons);
+    }
+
+    // ── Active nav highlight on scroll ────────────────────────
+    const sections = ['#top','#categories','#catalog','#about','#contact'].map(id => document.querySelector(id)).filter(Boolean);
+    const navLinks = document.querySelectorAll('nav.primary a');
+    const sectionObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = '#' + e.target.id;
+          navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === id));
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach(s => sectionObs.observe(s));
+  </script>
+
+  <!-- Mobile bottom tab bar -->
+  <nav class="tabbar" aria-label="主要功能">
+    <ul>
+      <li class="is-active">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+          商品
+        </a>
+      </li>
+      <li>
+        <a href="index.html#search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          搜尋
+        </a>
+      </li>
+      <li>
+        <a href="cart.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          購物車
+        </a>
+      </li>
+      <li>
+        <a href="account.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+</body>
+</html>

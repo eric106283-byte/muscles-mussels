@@ -1,0 +1,480 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>帳戶設定 — 肌肉淡菜 MUSCLES MUSSELS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           oklch(98% 0.007 81);
+    --surface:      oklch(100% 0 0);
+    --fg:           oklch(29% 0.034 287);
+    --muted:        oklch(50% 0.03 287);
+    --border:       oklch(90% 0.012 287);
+    --primary:      oklch(51% 0.095 285);
+    --primary-deep: oklch(36% 0.048 289);
+    --primary-soft: oklch(64% 0.083 287);
+    --accent:       oklch(69% 0.166 51);
+    --accent-deep:  oklch(58% 0.155 48);
+    --font-display: 'Noto Serif TC', 'Iowan Old Style', Georgia, serif;
+    --font-en:      'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', system-ui, sans-serif;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px -16px oklch(29% 0.034 287 / 0.28);
+    --shadow-lift: 0 20px 48px -18px oklch(29% 0.034 287 / 0.34);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
+
+  header.site {
+    position: sticky; top: 0; z-index: 40;
+    background: oklch(98% 0.007 81 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 46px; height: 46px; flex: none; }
+  .brand .wordmark { display: flex; flex-direction: column; line-height: 1.18; }
+  .brand .wordmark .zh { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.06em; color: var(--fg); }
+  .brand .wordmark .en { font-family: var(--font-en); font-style: italic; font-size: 12px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
+  nav.primary { display: flex; align-items: center; gap: 30px; }
+  nav.primary a { font-size: 14.5px; color: var(--muted); transition: color .15s ease; }
+  nav.primary a:hover { color: var(--fg); }
+  @media (max-width: 880px) { nav.primary { display: none; } }
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface);
+    color: var(--fg); position: relative; transition: border-color .15s ease, transform .15s ease;
+  }
+  .icon-btn:hover { border-color: var(--primary-soft); transform: translateY(-1px); }
+  .icon-btn.is-active { border-color: var(--accent); color: var(--accent); }
+  .icon-btn .dot {
+    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 10px; display: grid; place-items: center;
+    font-family: var(--font-body); border: 2px solid var(--bg);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.03em;
+    padding: 12px 28px; border-radius: var(--radius-pill); border: 1px solid transparent;
+    cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-accent { background: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 14px 32px -12px oklch(69% 0.166 51 / 0.55); }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-outline { border-color: var(--border); color: var(--fg); background: var(--surface); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  .crumb { padding-block: 22px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+  .crumb a:hover { color: var(--primary); }
+  .crumb span.sep { opacity: 0.5; }
+  .crumb span.current { color: var(--fg); }
+
+  .account-page { padding-bottom: clamp(56px, 8vw, 96px); }
+  .account-grid { display: grid; grid-template-columns: 256px 1fr; gap: clamp(28px, 4vw, 48px); align-items: start; }
+  @media (max-width: 880px) { .account-grid { grid-template-columns: 1fr; } }
+
+  .acc-side {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    box-shadow: var(--shadow-soft); padding: 22px; position: sticky; top: 96px;
+  }
+  .acc-side .who { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+  .acc-side .avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+    color: oklch(99% 0.01 90); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; flex: none;
+  }
+  .acc-side .who h2 { font-size: 15px; font-weight: 500; }
+  .acc-side .who p { font-size: 12px; color: var(--muted); }
+  .acc-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 11px 14px; border-radius: 12px;
+    font-size: 14px; color: var(--muted); transition: background .15s ease, color .15s ease;
+  }
+  .acc-nav a:hover { background: var(--bg); color: var(--fg); }
+  .acc-nav a.is-active { background: oklch(51% 0.095 285 / 0.1); color: var(--primary); font-weight: 500; }
+  .acc-nav a svg { flex: none; }
+  .acc-nav li + li { margin-top: 4px; }
+
+  .account-main h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 30px); margin-bottom: 6px; }
+  .account-main > .lede { color: var(--muted); font-size: 14px; margin-bottom: clamp(22px, 3vw, 32px); }
+
+  .settings-card {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    box-shadow: var(--shadow-soft); padding: clamp(24px, 3vw, 32px); margin-bottom: 22px;
+  }
+  .settings-card h2 { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .settings-card .sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 620px) { .field-grid { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 13px; color: var(--muted); }
+  .field input, .field select {
+    border: 1px solid var(--border); border-radius: 11px; padding: 12px 16px;
+    font-family: var(--font-body); font-size: 14px; background: var(--bg); color: var(--fg);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--primary-soft); box-shadow: 0 0 0 3px oklch(51% 0.095 285 / 0.12); }
+  .field .hint { font-size: 11.5px; color: var(--muted); }
+  .field .err { font-size: 11.5px; color: var(--accent-deep); display: none; }
+  .field.has-error input { border-color: var(--accent); }
+  .field.has-error .err { display: block; }
+
+  .form-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+
+  /* Toggle switches */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding-block: 14px; border-bottom: 1px solid var(--border);
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-row .label { font-size: 14px; }
+  .toggle-row .desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .switch { position: relative; display: inline-block; width: 44px; height: 26px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider {
+    position: absolute; inset: 0; background: var(--border); border-radius: var(--radius-pill);
+    cursor: pointer; transition: background .2s ease;
+  }
+  .switch .slider::before {
+    content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px;
+    background: var(--surface); border-radius: 50%; transition: transform .2s ease;
+    box-shadow: 0 2px 6px -2px oklch(29% 0.034 287 / 0.4);
+  }
+  .switch input:checked + .slider { background: var(--primary); }
+  .switch input:checked + .slider::before { transform: translateX(18px); }
+
+  /* Danger zone */
+  .danger-card { border-color: oklch(69% 0.166 51 / 0.35); }
+  .danger-card h2 { color: var(--accent-deep); }
+  .danger-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+  .btn-danger { border: 1px solid oklch(69% 0.166 51 / 0.4); color: var(--accent-deep); background: oklch(69% 0.166 51 / 0.06); }
+  .btn-danger:hover { background: oklch(69% 0.166 51 / 0.12); border-color: var(--accent); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(120%);
+    background: var(--primary-deep); color: oklch(97% 0.012 287);
+    padding: 14px 26px; border-radius: var(--radius-pill); font-size: 13.5px;
+    box-shadow: var(--shadow-lift); transition: transform .35s cubic-bezier(.22,.61,.36,1);
+    z-index: 80; white-space: nowrap;
+  }
+  .toast.is-shown { transform: translateX(-50%) translateY(0); }
+  .toast.is-error { background: var(--accent-deep); }
+
+  @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .account-main h1, .settings-card { animation: fade-up 0.6s cubic-bezier(.22,.61,.36,1) both; }
+  .settings-card:nth-of-type(1) { animation-delay: .06s; }
+  .settings-card:nth-of-type(2) { animation-delay: .12s; }
+  .settings-card:nth-of-type(3) { animation-delay: .18s; }
+  .settings-card:nth-of-type(4) { animation-delay: .24s; }
+  @media (prefers-reduced-motion: reduce) { body, .account-main h1, .settings-card { animation: none !important; transition: none !important; } }
+  @keyframes page-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes page-out { to { opacity: 0; transform: translateY(-8px); } }
+  body { animation: page-in .28s ease both; }
+  body.is-leaving { animation: page-out .2s ease forwards; }
+
+  footer.site { background: var(--primary-deep); color: oklch(94% 0.015 287); padding-block: 36px; }
+  footer.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  footer.site .f-brand { display: flex; align-items: center; gap: 12px; }
+  footer.site .f-brand .badge { width: 36px; height: 36px; }
+  footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  footer.site .f-brand .en { font-family: var(--font-en); font-style: italic; font-size: 11px; letter-spacing: 0.2em; color: oklch(92% 0.018 287 / 0.6); text-transform: uppercase; }
+  footer.site .copy { color: oklch(92% 0.018 287 / 0.6); }
+  /* ── Mobile bottom tabbar ───────────────────────────── */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: none; background: oklch(100% 0 0 / 0.94); backdrop-filter: blur(16px) saturate(1.2); border-top: 1px solid var(--border); padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+  .tabbar ul { display: flex; justify-content: space-around; }
+  .tabbar li { flex: 1; }
+  .tabbar li a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; font-size: 11px; color: var(--muted); text-decoration: none; transition: color .15s ease; }
+  .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+  .tabbar li a svg { width: 22px; height: 22px; }
+  @media (max-width: 640px) { .tabbar { display: block; } body { padding-bottom: 60px; } }
+  /* ── Mobile member nav ──────────────────────────────── */
+  .acc-nav-mobile { display: none; }
+  @media (max-width: 880px) {
+    .acc-side { display: none; }
+    .acc-nav-mobile { display: flex; overflow-x: auto; gap: 8px; padding: 0 0 16px; margin-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .acc-nav-mobile::-webkit-scrollbar { display: none; }
+    .acc-nav-mobile a { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 13px; color: var(--muted); background: var(--surface); flex: none; text-decoration: none; transition: all .15s ease; }
+    .acc-nav-mobile a.is-active { background: var(--primary); border-color: var(--primary); color: white; font-weight: 500; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels 品牌標誌">
+        <span class="wordmark">
+          <span class="zh">肌肉淡菜</span>
+          <span class="en">Muscles Mussels</span>
+        </span>
+      </a>
+      <nav class="primary">
+        <a href="index.html">首頁</a>
+        <a href="index.html#categories">海鮮分類</a>
+        <a href="index.html#catalog">商品目錄</a>
+        <a href="about.html">品牌故事</a>
+        <a href="index.html#contact">聯絡我們</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn is-active" href="account.html" aria-label="會員中心">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4.5"/></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="購物車">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="dot" id="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap crumb">
+    <a href="index.html">首頁</a><span class="sep">/</span>
+    <a href="account.html">會員中心</a><span class="sep">/</span>
+    <span class="current">帳戶設定</span>
+  </div>
+
+  <main class="account-page">
+    <div class="wrap">
+      <div class="account-grid">
+        <aside class="acc-side">
+          <div class="who">
+            <span class="avatar">陳</span>
+            <div>
+              <h2>陳小姐</h2>
+              <p>chen@example.com</p>
+            </div>
+          </div>
+          <ul class="acc-nav">
+            <li><a href="account.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>會員首頁</a></li>
+            <li><a href="orders.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0h12l-1 13H7L6 7Z"/></svg>我的訂單</a></li>
+            <li><a href="addresses.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.9-7-10a7 7 0 0 1 14 0c0 5.1-7 10-7 10Z"/><circle cx="12" cy="11" r="2.4"/></svg>收貨地址</a></li>
+            <li><a href="favorites.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>我的收藏</a></li>
+            <li><a href="settings.html" class="is-active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5c.04-.5.04-1 0-1.5l1.6-1.4-1.6-2.8-2 .6a7.6 7.6 0 0 0-1.3-.75L15.6 5h-3.2l-.5 2.65c-.46.18-.9.43-1.3.75l-2-.6-1.6 2.8 1.6 1.4a6 6 0 0 0 0 1.5l-1.6 1.4 1.6 2.8 2-.6c.4.32.84.57 1.3.75l.5 2.65h3.2l.5-2.65c.46-.18.9-.43 1.3-.75l2 .6 1.6-2.8-1.6-1.4Z"/></svg>帳戶設定</a></li>
+            <li><a href="login.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>登出</a></li>
+          </ul>
+        </aside>
+
+        <div class="account-main">
+          <nav class="acc-nav-mobile" aria-label="會員選單">
+            <a href="account.html">會員首頁</a>
+            <a href="orders.html">我的訂單</a>
+            <a href="addresses.html">收貨地址</a>
+            <a href="favorites.html">我的收藏</a>
+            <a href="settings.html" class="is-active">帳戶設定</a>
+          </nav>
+          <h1>帳戶設定</h1>
+          <p class="lede">更新您的個人資料、密碼與通知偏好設定。</p>
+
+          <form class="settings-card" id="profile-form" novalidate>
+            <h2>個人資料</h2>
+            <p class="sub">這些資訊將顯示於訂單與會員中心。</p>
+            <div class="field-grid">
+              <div class="field">
+                <label for="f-name">姓名</label>
+                <input id="f-name" name="name" type="text" value="陳小姐" required>
+              </div>
+              <div class="field">
+                <label for="f-phone">聯絡電話</label>
+                <input id="f-phone" name="phone" type="tel" value="0912-345-678" required>
+              </div>
+              <div class="field full">
+                <label for="f-email">電子信箱</label>
+                <input id="f-email" name="email" type="email" value="chen@example.com" required>
+                <span class="err">請輸入有效的電子信箱格式</span>
+              </div>
+              <div class="field">
+                <label for="f-birthday">生日</label>
+                <input id="f-birthday" name="birthday" type="date" value="1990-04-12">
+                <span class="hint">生日當月可獲得專屬優惠通知</span>
+              </div>
+              <div class="field">
+                <label for="f-pref">偏好聯絡方式</label>
+                <select id="f-pref" name="pref">
+                  <option value="line">LINE 官方帳號</option>
+                  <option value="email">電子郵件</option>
+                  <option value="sms">簡訊通知</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-accent">儲存變更</button>
+              <button type="reset" class="btn btn-outline">取消</button>
+            </div>
+          </form>
+
+          <form class="settings-card" id="password-form" novalidate>
+            <h2>修改密碼</h2>
+            <p class="sub">建議定期更新密碼，並避免與其他網站重複使用。</p>
+            <div class="field-grid">
+              <div class="field full">
+                <label for="f-current-pw">目前密碼</label>
+                <input id="f-current-pw" name="current" type="password" required>
+              </div>
+              <div class="field">
+                <label for="f-new-pw">新密碼</label>
+                <input id="f-new-pw" name="new" type="password" required minlength="6">
+                <span class="hint">至少 6 個字元</span>
+                <span class="err">新密碼至少需要 6 個字元</span>
+              </div>
+              <div class="field">
+                <label for="f-confirm-pw">確認新密碼</label>
+                <input id="f-confirm-pw" name="confirm" type="password" required>
+                <span class="err">兩次輸入的密碼不一致</span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-accent">更新密碼</button>
+            </div>
+          </form>
+
+          <div class="settings-card">
+            <h2>通知偏好</h2>
+            <p class="sub">選擇您想接收的通知類型，隨時可以調整。</p>
+            <div class="toggle-row">
+              <div><div class="label">訂單與物流通知</div><div class="desc">出貨、配送進度與簽收提醒</div></div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="label">現流到貨快訊</div><div class="desc">當天現流海鮮到貨即時通知</div></div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="label">會員專屬優惠</div><div class="desc">生日禮、限量預購與會員折扣資訊</div></div>
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="label">電子報訂閱</div><div class="desc">每月品牌故事與海鮮料理食譜</div></div>
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-card danger-card">
+            <h2>停用帳戶</h2>
+            <p class="sub">停用後將無法登入會員中心，歷史訂單紀錄會保留 90 天。</p>
+            <div class="danger-row">
+              <p style="font-size:13px; color:var(--muted); max-width:46ch;">如需重新啟用，請於 90 天內聯繫客服専線 0800-388-588。</p>
+              <button class="btn btn-danger" type="button" id="deactivate-btn">停用我的帳戶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="f-brand">
+        <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+        <span><span class="zh" style="display:block">肌肉淡菜</span><span class="en">Muscles Mussels</span></span>
+      </div>
+      <span class="copy">© 2026 肌肉淡菜 Muscles Mussels · 馬祖高登海域 領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">已儲存變更</div>
+
+<script>
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg, isError) {
+    toast.textContent = msg;
+    toast.classList.toggle('is-error', !!isError);
+    toast.classList.add('is-shown');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2400);
+  }
+  function setError(field, show) {
+    field.classList.toggle('has-error', show);
+  }
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  document.getElementById('profile-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const emailField = document.getElementById('f-email');
+    const emailOk = emailRe.test(emailField.value.trim());
+    setError(emailField.closest('.field'), !emailOk);
+    if (!emailOk) { showToast('請確認電子信箱格式是否正確', true); return; }
+    showToast('已儲存個人資料變更');
+  });
+  document.getElementById('f-email').addEventListener('input', e => {
+    setError(e.target.closest('.field'), false);
+  });
+
+  document.getElementById('password-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const newPw = document.getElementById('f-new-pw');
+    const confirmPw = document.getElementById('f-confirm-pw');
+    let hasError = false;
+
+    const lengthOk = newPw.value.length >= 6;
+    setError(newPw.closest('.field'), !lengthOk);
+    if (!lengthOk) hasError = true;
+
+    const matchOk = newPw.value === confirmPw.value && confirmPw.value.length > 0;
+    setError(confirmPw.closest('.field'), !matchOk);
+    if (!matchOk) hasError = true;
+
+    if (hasError) { showToast('請確認密碼欄位是否正確填寫', true); return; }
+    showToast('密碼已成功更新');
+    e.target.reset();
+  });
+  ['f-new-pw', 'f-confirm-pw'].forEach(id => {
+    document.getElementById(id).addEventListener('input', e => setError(e.target.closest('.field'), false));
+  });
+
+  document.querySelectorAll('.switch input').forEach(input => {
+    input.addEventListener('change', () => {
+      const label = input.closest('.toggle-row').querySelector('.label').textContent;
+      showToast(`「${label}」已${input.checked ? '開啟' : '關閉'}`);
+    });
+  });
+
+  document.getElementById('deactivate-btn').addEventListener('click', () => {
+    showToast('已送出帳戶停用申請，將由客服與您確認', true);
+  });
+
+  // Page exit transitions
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto')) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, 200);
+    });
+  });
+</script>
+
+<nav class="tabbar" aria-label="主要功能">
+  <ul>
+    <li><a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>商品
+    </a></li>
+    <li><a href="index.html#search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>搜尋
+    </a></li>
+    <li><a href="cart.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>購物車
+    </a></li>
+    <li class="is-active"><a href="account.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的
+    </a></li>
+  </ul>
+</nav>
+</body>
+</html>

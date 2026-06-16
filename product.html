@@ -1,0 +1,418 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>活體淡菜・大規格 L — 肌肉淡菜 MUSCLES MUSSELS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           oklch(98% 0.007 81);
+    --surface:      oklch(100% 0 0);
+    --fg:           oklch(29% 0.034 287);
+    --muted:        oklch(50% 0.03 287);
+    --border:       oklch(90% 0.012 287);
+    --primary:      oklch(51% 0.095 285);
+    --primary-deep: oklch(36% 0.048 289);
+    --primary-soft: oklch(64% 0.083 287);
+    --accent:       oklch(69% 0.166 51);
+    --accent-deep:  oklch(58% 0.155 48);
+    --font-display: 'Noto Serif TC', 'Iowan Old Style', Georgia, serif;
+    --font-en:      'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', system-ui, sans-serif;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px -16px oklch(29% 0.034 287 / 0.28);
+    --shadow-lift: 0 20px 48px -18px oklch(29% 0.034 287 / 0.34);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
+
+  header.site {
+    position: sticky; top: 0; z-index: 40;
+    background: oklch(98% 0.007 81 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 46px; height: 46px; flex: none; }
+  .brand .wordmark { display: flex; flex-direction: column; line-height: 1.18; }
+  .brand .wordmark .zh { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.06em; color: var(--fg); }
+  .brand .wordmark .en { font-family: var(--font-en); font-style: italic; font-size: 12px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
+  nav.primary { display: flex; align-items: center; gap: 30px; }
+  nav.primary a { font-size: 14.5px; color: var(--muted); transition: color .15s ease; }
+  nav.primary a:hover { color: var(--fg); }
+  @media (max-width: 880px) { nav.primary { display: none; } }
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface);
+    color: var(--fg); position: relative; transition: border-color .15s ease, transform .15s ease;
+  }
+  .icon-btn:hover { border-color: var(--primary-soft); transform: translateY(-1px); }
+  .icon-btn .dot {
+    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 10px; display: grid; place-items: center;
+    font-family: var(--font-body); border: 2px solid var(--bg);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--font-body); font-size: 14.5px; font-weight: 500; letter-spacing: 0.03em;
+    padding: 14px 30px; border-radius: var(--radius-pill); border: 1px solid transparent;
+    cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-accent { background: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 14px 32px -12px oklch(69% 0.166 51 / 0.55); }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-outline { border-color: var(--border); color: var(--fg); background: var(--surface); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  /* Breadcrumb */
+  .crumb { padding-block: 22px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+  .crumb a:hover { color: var(--primary); }
+  .crumb span.sep { opacity: 0.5; }
+  .crumb span.current { color: var(--fg); }
+
+  /* Product layout */
+  .product { padding-bottom: clamp(56px, 8vw, 96px); }
+  .product .grid {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 72px);
+  }
+  @media (max-width: 880px) { .product .grid { grid-template-columns: 1fr; } }
+
+  .gallery-main {
+    position: relative; aspect-ratio: 1 / 1; border-radius: var(--radius-card);
+    overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-soft);
+    background: var(--surface);
+  }
+  .gallery-main img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .gallery-main img.is-active { opacity: 1; }
+  .gallery-thumbs { display: flex; gap: 12px; margin-top: 16px; }
+  .gallery-thumbs button {
+    width: 84px; height: 84px; border-radius: 12px; overflow: hidden; cursor: pointer;
+    border: 2px solid var(--border); padding: 0; background: none; transition: border-color .15s ease;
+  }
+  .gallery-thumbs button.is-active { border-color: var(--accent); }
+  .gallery-thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+  .p-info .kicker { font-family: var(--font-en); font-style: italic; letter-spacing: 0.18em; text-transform: uppercase; font-size: 13px; color: var(--accent); margin-bottom: 10px; }
+  .p-info h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 38px); line-height: 1.32; }
+  .p-info .price-row { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; }
+  .p-info .price { font-family: var(--font-en); font-size: 34px; font-weight: 600; color: var(--primary); }
+  .p-info .price small { font-family: var(--font-body); font-size: 14px; color: var(--muted); font-weight: 400; }
+  .p-info .unit { font-size: 13px; color: var(--muted); }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .badge-pill {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 7px 14px;
+  }
+  .badge-pill svg { color: var(--primary); }
+
+  .spec-list { margin-top: 24px; border-top: 1px solid var(--border); }
+  .spec-list .row { display: flex; justify-content: space-between; padding-block: 13px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .spec-list .row span:first-child { color: var(--muted); }
+  .spec-list .row span:last-child { font-weight: 500; }
+
+  .qty-row { display: flex; align-items: center; gap: 18px; margin-top: 28px; }
+  .stepper { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; }
+  .stepper button { width: 42px; height: 42px; border: none; background: var(--surface); cursor: pointer; font-size: 17px; color: var(--fg); transition: background .15s ease, color .15s ease; }
+  .stepper button:hover { background: var(--bg); color: var(--primary); }
+  .stepper output { width: 48px; text-align: center; font-variant-numeric: tabular-nums; font-size: 15px; }
+  .qty-row .btn { flex: 1; }
+  .qty-row .stock { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+  .accordion { margin-top: 32px; border-top: 1px solid var(--border); }
+  .accordion details { border-bottom: 1px solid var(--border); }
+  .accordion summary {
+    display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    padding-block: 16px; font-size: 14.5px; font-weight: 500; list-style: none;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary .chev { transition: transform .25s ease; color: var(--muted); }
+  .accordion details[open] summary .chev { transform: rotate(45deg); }
+  .accordion .panel { padding-bottom: 18px; font-size: 13.5px; color: var(--muted); max-width: 60ch; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(120%);
+    background: var(--primary-deep); color: oklch(97% 0.012 287);
+    padding: 14px 26px; border-radius: var(--radius-pill); font-size: 13.5px;
+    box-shadow: var(--shadow-lift); transition: transform .35s cubic-bezier(.22,.61,.36,1);
+    z-index: 80; white-space: nowrap;
+  }
+  .toast.is-shown { transform: translateX(-50%) translateY(0); }
+
+  /* Related */
+  .related { padding-block: clamp(48px, 7vw, 80px); border-top: 1px solid var(--border); }
+  .related h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.6vw, 28px); margin-bottom: 24px; }
+  .rel-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 980px) { .rel-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .rel-grid { grid-template-columns: 1fr; } }
+  .rel-card { border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden; background: var(--surface); transition: transform .2s ease, box-shadow .2s ease; }
+  .rel-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .rel-card .ph { aspect-ratio: 4/3; overflow: hidden; }
+  .rel-card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .rel-card:hover .ph img { transform: scale(1.05); }
+  .rel-card .info { padding: 16px; }
+  .rel-card h3 { font-size: 14.5px; font-weight: 500; margin-bottom: 6px; }
+  .rel-card .price { font-family: var(--font-en); font-size: 17px; color: var(--primary); }
+
+  @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .p-info > * { animation: fade-up 0.7s cubic-bezier(.22,.61,.36,1) both; }
+  .p-info .kicker     { animation-delay: .04s; }
+  .p-info h1          { animation-delay: .1s; }
+  .p-info .price-row  { animation-delay: .16s; }
+  .p-info .badges     { animation-delay: .22s; }
+  .p-info .spec-list  { animation-delay: .28s; }
+  .p-info .qty-row    { animation-delay: .34s; }
+  .p-info .accordion  { animation-delay: .4s; }
+  @media (prefers-reduced-motion: reduce) { body, .p-info > *, .gallery-main img { animation: none !important; transition: none !important; } }
+  @keyframes page-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes page-out { to { opacity: 0; transform: translateY(-8px); } }
+  body { animation: page-in .28s ease both; }
+  body.is-leaving { animation: page-out .2s ease forwards; }
+
+  footer.site { background: var(--primary-deep); color: oklch(94% 0.015 287); padding-block: 36px; }
+  footer.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  footer.site .f-brand { display: flex; align-items: center; gap: 12px; }
+  footer.site .f-brand .badge { width: 36px; height: 36px; }
+  footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  footer.site .f-brand .en { font-family: var(--font-en); font-style: italic; font-size: 11px; letter-spacing: 0.2em; color: oklch(92% 0.018 287 / 0.6); text-transform: uppercase; }
+  footer.site .copy { color: oklch(92% 0.018 287 / 0.6); }
+  /* ── Mobile bottom tabbar ───────────────────────────── */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: none; background: oklch(100% 0 0 / 0.94); backdrop-filter: blur(16px) saturate(1.2); border-top: 1px solid var(--border); padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+  .tabbar ul { display: flex; justify-content: space-around; }
+  .tabbar li { flex: 1; }
+  .tabbar li a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; font-size: 11px; color: var(--muted); text-decoration: none; transition: color .15s ease; }
+  .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+  .tabbar li a svg { width: 22px; height: 22px; }
+  @media (max-width: 640px) { .tabbar { display: block; } body { padding-bottom: 60px; } }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels 品牌標誌">
+        <span class="wordmark">
+          <span class="zh">肌肉淡菜</span>
+          <span class="en">Muscles Mussels</span>
+        </span>
+      </a>
+      <nav class="primary">
+        <a href="index.html">首頁</a>
+        <a href="index.html#categories">海鮮分類</a>
+        <a href="index.html#catalog">商品目錄</a>
+        <a href="about.html">品牌故事</a>
+        <a href="index.html#contact">聯絡我們</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn" href="login.html" aria-label="會員登入">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4.5"/></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="購物車">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="dot" id="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap crumb">
+    <a href="index.html">首頁</a><span class="sep">/</span>
+    <a href="index.html#catalog">商品目錄</a><span class="sep">/</span>
+    <span class="current">活體淡菜・大規格 L</span>
+  </div>
+
+  <main class="product">
+    <div class="wrap">
+      <div class="grid">
+        <div class="gallery">
+          <div class="gallery-main">
+            <img src="images/p-mussel-l.webp" class="is-active" data-idx="0" alt="活體淡菜大規格 L 級，盛盤呈現馬祖海景">
+            <img src="images/cat-live.webp" data-idx="1" alt="馬祖高登海域漁工現流採收活體淡菜">
+            <img src="images/hero.webp" data-idx="2" alt="肌肉淡菜品牌桶裝活體淡菜，馬祖漁港實拍">
+          </div>
+          <div class="gallery-thumbs">
+            <button class="is-active" data-idx="0" aria-label="檢視圖片 1"><img src="images/p-mussel-l.webp" alt=""></button>
+            <button data-idx="1" aria-label="檢視圖片 2"><img src="images/cat-live.webp" alt=""></button>
+            <button data-idx="2" aria-label="檢視圖片 3"><img src="images/hero.webp" alt=""></button>
+          </div>
+        </div>
+
+        <div class="p-info">
+          <p class="kicker">Live Mussels · Grade L</p>
+          <h1>活體淡菜・大規格 L<br>殼徑 12cm 以上，馬祖高登現流直送</h1>
+          <div class="price-row">
+            <span class="price tabular">$380<small> / kg</small></span>
+            <span class="unit">最低 5kg 起訂</span>
+          </div>
+
+          <div class="badges">
+            <span class="badge-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/></svg>領有執照合法養殖</span>
+            <span class="badge-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M3 6h18M3 18h18"/></svg>冷鏈直送到府</span>
+            <span class="badge-pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>現流 24 小時內出貨</span>
+          </div>
+
+          <div class="spec-list">
+            <div class="row"><span>規格</span><span>殼徑 12cm 以上・盒裝鮮重約 1kg／份</span></div>
+            <div class="row"><span>產地</span><span>馬祖高登海域・吊繩放養</span></div>
+            <div class="row"><span>起訂量</span><span>最低 5kg 起訂</span></div>
+            <div class="row"><span>保存方式</span><span>到貨後冷藏保存，建議 48 小時內食用完畢</span></div>
+            <div class="row"><span>適合料理</span><span>白酒蒸煮、塔香快炒、海鮮鍋物</span></div>
+          </div>
+
+          <div class="qty-row">
+            <div>
+              <div class="stepper">
+                <button type="button" id="qty-minus" aria-label="減少數量">−</button>
+                <output id="qty-val">5</output>
+                <button type="button" id="qty-plus" aria-label="增加數量">+</button>
+              </div>
+              <p class="stock">庫存充足・現流直送</p>
+            </div>
+            <button class="btn btn-accent" id="add-to-cart">
+              加入購物車
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+            </button>
+          </div>
+
+          <div class="accordion">
+            <details open>
+              <summary>商品描述<span class="chev">+</span></summary>
+              <div class="panel">船舶禁航區深水放養活淡菜，嚴選最肥美多汁的本土紫殼貽貝，殼徑超過 12 公分。馬祖高登海域高鹽度、高流速的天然環境，造就肉厚甜度高的紫貽貝本色，最適合白酒蒸煮或塔香快炒，原汁原味呈現馬祖海域的鮮甜本味。</div>
+            </details>
+            <details>
+              <summary>配送與保存<span class="chev">+</span></summary>
+              <div class="panel">
+                到貨後請以 6～10 度冷藏保存，建議收到貨起 5 天內食用完畢（生鮮桶採回收制）。<br><br>
+                ・出貨時間：每日中午 12:00 前確認訂單，3 個工作日內出貨，出貨後將以簡訊或 LINE 通知物流單號<br>
+                ・配送溫層：全程低溫配送，保持淡菜新鮮與活力<br>
+                ・配送地區：限台灣本島全區（離島地區暫不配送）<br>
+                ・到貨時間：出貨後約 1～2 個工作天送達（實際以物流狀況為準）<br>
+                ・運費說明：單筆訂單滿 $1,000 元享單一地址免運；未滿訂購門檻加收運費 $220 元／地址
+              </div>
+            </details>
+            <details>
+              <summary>收貨須知<span class="chev">+</span></summary>
+              <div class="panel">收到貨時請確認商品狀況，建議全程錄影拆封；建議於簽收後 6 小時內完成檢查，如發現到貨前已死亡的淡菜，請拍照存證並立即聯繫客服，我們會在下一次出貨為您補足。如有任何問題，客服専線 0800-388-588 將第一時間協助您。</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="related">
+    <div class="wrap">
+      <h2>您可能也喜歡</h2>
+      <div class="rel-grid">
+        <a class="rel-card" href="product.html">
+          <div class="ph"><img src="images/p-mussel-m.webp" alt="活體淡菜中規格 M 級"></div>
+          <div class="info"><h3>活體淡菜・中規格 M</h3><span class="price tabular">$330<small style="font-size:12px;color:var(--muted)"> /kg</small></span></div>
+        </a>
+        <a class="rel-card" href="product.html">
+          <div class="ph"><img src="images/p-mussel-s.webp" alt="活體淡菜小規格 S 級"></div>
+          <div class="info"><h3>活體淡菜・小規格 S</h3><span class="price tabular">$310<small style="font-size:12px;color:var(--muted)"> /kg</small></span></div>
+        </a>
+        <a class="rel-card" href="product.html">
+          <div class="ph"><img src="images/p-barnacle.webp" alt="馬祖佛手藤壺"></div>
+          <div class="info"><h3>佛手藤壺</h3><span class="price tabular">$1,100<small style="font-size:12px;color:var(--muted)"> /盒</small></span></div>
+        </a>
+        <a class="rel-card" href="product.html">
+          <div class="ph"><img src="images/p-beer.webp" alt="老陳啤瓶裝實品照"></div>
+          <div class="info"><h3>老陳啤</h3><span class="price tabular">$180<small style="font-size:12px;color:var(--muted)"> /瓶</small></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="f-brand">
+        <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+        <span><span class="zh" style="display:block">肌肉淡菜</span><span class="en">Muscles Mussels</span></span>
+      </div>
+      <span class="copy">© 2026 肌肉淡菜 Muscles Mussels · 馬祖高登海域 領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">已加入購物車</div>
+
+<script>
+  // Gallery: thumbnail switches main image
+  const mainImgs = document.querySelectorAll('.gallery-main img');
+  const thumbs = document.querySelectorAll('.gallery-thumbs button');
+  thumbs.forEach(btn => btn.addEventListener('click', () => {
+    thumbs.forEach(b => b.classList.toggle('is-active', b === btn));
+    mainImgs.forEach(img => img.classList.toggle('is-active', img.dataset.idx === btn.dataset.idx));
+  }));
+
+  // Quantity stepper (min 5kg per 起訂量)
+  const qtyVal = document.getElementById('qty-val');
+  const MIN_QTY = 5;
+  let qty = MIN_QTY;
+  function renderQty() { qtyVal.textContent = qty; }
+  document.getElementById('qty-minus').addEventListener('click', () => { qty = Math.max(MIN_QTY, qty - 1); renderQty(); });
+  document.getElementById('qty-plus').addEventListener('click', () => { qty = qty + 1; renderQty(); });
+  renderQty();
+
+  // Add to cart -> toast + cart badge increment
+  const toast = document.getElementById('toast');
+  const cartCount = document.getElementById('cart-count');
+  document.getElementById('add-to-cart').addEventListener('click', () => {
+    cartCount.textContent = String(Number(cartCount.textContent) + 1);
+    toast.textContent = `已將 ${qty}kg 活體淡菜・大規格 L 加入購物車`;
+    toast.classList.add('is-shown');
+    setTimeout(() => toast.classList.remove('is-shown'), 3000);
+  });
+
+  // Accordion: keep only one panel open at a time
+  const details = document.querySelectorAll('.accordion details');
+  details.forEach(d => d.addEventListener('toggle', () => {
+    if (d.open) details.forEach(other => { if (other !== d) other.open = false; });
+  }));
+
+  // Page exit transitions
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto')) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, 200);
+    });
+  });
+</script>
+
+<nav class="tabbar" aria-label="主要功能">
+  <ul>
+    <li class="is-active"><a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>商品
+    </a></li>
+    <li><a href="index.html#search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>搜尋
+    </a></li>
+    <li><a href="cart.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>購物車
+    </a></li>
+    <li><a href="account.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的
+    </a></li>
+  </ul>
+</nav>
+</body>
+</html>

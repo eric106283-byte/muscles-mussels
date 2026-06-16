@@ -1,0 +1,495 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的訂單 — 肌肉淡菜 MUSCLES MUSSELS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           oklch(98% 0.007 81);
+    --surface:      oklch(100% 0 0);
+    --fg:           oklch(29% 0.034 287);
+    --muted:        oklch(50% 0.03 287);
+    --border:       oklch(90% 0.012 287);
+    --primary:      oklch(51% 0.095 285);
+    --primary-deep: oklch(36% 0.048 289);
+    --primary-soft: oklch(64% 0.083 287);
+    --accent:       oklch(69% 0.166 51);
+    --accent-deep:  oklch(58% 0.155 48);
+    --good:         oklch(63% 0.13 152);
+    --font-display: 'Noto Serif TC', 'Iowan Old Style', Georgia, serif;
+    --font-en:      'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', system-ui, sans-serif;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px -16px oklch(29% 0.034 287 / 0.28);
+    --shadow-lift: 0 20px 48px -18px oklch(29% 0.034 287 / 0.34);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; font-size: 16px; }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
+
+  header.site {
+    position: sticky; top: 0; z-index: 40;
+    background: oklch(98% 0.007 81 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 46px; height: 46px; flex: none; }
+  .brand .wordmark { display: flex; flex-direction: column; line-height: 1.18; }
+  .brand .wordmark .zh { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.06em; color: var(--fg); }
+  .brand .wordmark .en { font-family: var(--font-en); font-style: italic; font-size: 12px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
+  nav.primary { display: flex; align-items: center; gap: 30px; }
+  nav.primary a { font-size: 14.5px; color: var(--muted); transition: color .15s ease; }
+  nav.primary a:hover { color: var(--fg); }
+  @media (max-width: 880px) { nav.primary { display: none; } }
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface);
+    color: var(--fg); position: relative; transition: border-color .15s ease, transform .15s ease;
+  }
+  .icon-btn:hover { border-color: var(--primary-soft); transform: translateY(-1px); }
+  .icon-btn.is-active { border-color: var(--accent); color: var(--accent); }
+  .icon-btn .dot {
+    position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 10px; display: grid; place-items: center;
+    font-family: var(--font-body); border: 2px solid var(--bg);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.03em;
+    padding: 11px 24px; border-radius: var(--radius-pill); border: 1px solid transparent;
+    cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn-accent { background: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 14px 32px -12px oklch(69% 0.166 51 / 0.55); }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-outline { border-color: var(--border); color: var(--fg); background: var(--surface); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  .crumb { padding-block: 22px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+  .crumb a:hover { color: var(--primary); }
+  .crumb span.sep { opacity: 0.5; }
+  .crumb span.current { color: var(--fg); }
+
+  .account-page { padding-bottom: clamp(56px, 8vw, 96px); }
+  .account-grid { display: grid; grid-template-columns: 256px 1fr; gap: clamp(28px, 4vw, 48px); align-items: start; }
+  @media (max-width: 880px) { .account-grid { grid-template-columns: 1fr; } }
+
+  /* Account sidebar */
+  .acc-side {
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);
+    box-shadow: var(--shadow-soft); padding: 22px; position: sticky; top: 96px;
+  }
+  .acc-side .who { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+  .acc-side .avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+    color: oklch(99% 0.01 90); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; flex: none;
+  }
+  .acc-side .who h2 { font-size: 15px; font-weight: 500; }
+  .acc-side .who p { font-size: 12px; color: var(--muted); }
+  .acc-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 11px 14px; border-radius: 12px;
+    font-size: 14px; color: var(--muted); transition: background .15s ease, color .15s ease;
+  }
+  .acc-nav a:hover { background: var(--bg); color: var(--fg); }
+  .acc-nav a.is-active { background: oklch(51% 0.095 285 / 0.1); color: var(--primary); font-weight: 500; }
+  .acc-nav a svg { flex: none; }
+  .acc-nav li + li { margin-top: 4px; }
+
+  .account-main h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 30px); margin-bottom: 6px; }
+  .account-main > .lede { color: var(--muted); font-size: 14px; margin-bottom: clamp(22px, 3vw, 32px); }
+
+  /* Filter tabs */
+  .order-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .order-tabs button {
+    border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-pill);
+    padding: 9px 20px; font-size: 13.5px; color: var(--muted); cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .order-tabs button:hover { color: var(--fg); border-color: var(--primary-soft); }
+  .order-tabs button.is-active { background: var(--primary); border-color: var(--primary); color: oklch(99% 0.01 90); }
+
+  /* Order cards */
+  .order-list { display: flex; flex-direction: column; gap: 18px; }
+  .order-card { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-soft); overflow: hidden; }
+  .order-card .head {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 22px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted);
+  }
+  .order-card .head .id { font-weight: 500; color: var(--fg); }
+  .order-card .head .sep { opacity: .4; margin-inline: 4px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500;
+    padding: 6px 14px; border-radius: var(--radius-pill);
+  }
+  .status-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .status-pill.is-processing { color: var(--accent-deep); background: oklch(69% 0.166 51 / 0.12); }
+  .status-pill.is-shipping   { color: var(--primary-deep); background: oklch(51% 0.095 285 / 0.12); }
+  .status-pill.is-done       { color: var(--good); background: oklch(63% 0.13 152 / 0.12); }
+  .status-pill.is-cancelled  { color: var(--muted); background: oklch(50% 0.03 287 / 0.1); }
+
+  .order-card .body { padding: 20px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+  .order-card .items { display: flex; gap: 12px; flex: 1; min-width: 220px; }
+  .order-card .ph { width: 64px; height: 64px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); flex: none; position: relative; }
+  .order-card .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .order-card .ph .more {
+    position: absolute; inset: 0; background: oklch(29% 0.034 287 / 0.55); color: oklch(99% 0.01 90);
+    display: grid; place-items: center; font-size: 12px; font-family: var(--font-en);
+  }
+  .order-card .summary-text { font-size: 13.5px; color: var(--muted); }
+  .order-card .summary-text strong { color: var(--fg); font-weight: 500; }
+  .order-card .total { text-align: right; }
+  .order-card .total .label { font-size: 12px; color: var(--muted); }
+  .order-card .total .amount { font-family: var(--font-en); font-size: 22px; font-weight: 600; color: var(--primary); }
+  .order-card .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .order-card .actions .btn { padding: 10px 20px; font-size: 13px; }
+
+  .order-card .progress { padding: 0 22px 20px; }
+  .progress-track { display: flex; align-items: center; gap: 0; }
+  .progress-track .step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; position: relative; }
+  .progress-track .step .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); display: grid; place-items: center; color: var(--muted); transition: all .2s ease; z-index: 1; }
+  .progress-track .step .label { font-size: 11.5px; color: var(--muted); text-align: center; }
+  .progress-track .step.is-done .dot { background: var(--primary); border-color: var(--primary); color: oklch(99% 0.01 90); }
+  .progress-track .step.is-done .label { color: var(--fg); }
+  .progress-track .step.is-current .dot { background: var(--accent); border-color: var(--accent); color: oklch(99% 0.01 90); box-shadow: 0 0 0 5px oklch(69% 0.166 51 / 0.16); }
+  .progress-track .step.is-current .label { color: var(--accent-deep); font-weight: 500; }
+  .progress-track .step:not(:last-child)::after {
+    content: ""; position: absolute; top: 11px; left: calc(50% + 14px); right: calc(-50% + 14px);
+    height: 2px; background: var(--border);
+  }
+  .progress-track .step.is-done:not(:last-child)::after { background: var(--primary); }
+
+  .empty-orders { display: none; text-align: center; padding-block: 80px; border: 1px dashed var(--border); border-radius: var(--radius-card); }
+  .empty-orders.is-shown { display: block; }
+  .empty-orders svg { margin-inline: auto; color: var(--muted); margin-bottom: 18px; }
+  .empty-orders p { color: var(--muted); margin-bottom: 22px; }
+
+  @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .account-main h1, .order-tabs, .order-card { animation: fade-up 0.6s cubic-bezier(.22,.61,.36,1) both; }
+  .order-card:nth-child(1) { animation-delay: .08s; }
+  .order-card:nth-child(2) { animation-delay: .14s; }
+  .order-card:nth-child(3) { animation-delay: .2s; }
+  .order-card:nth-child(4) { animation-delay: .26s; }
+  @media (prefers-reduced-motion: reduce) { body, .account-main h1, .order-tabs, .order-card { animation: none !important; transition: none !important; } }
+  @keyframes page-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes page-out { to { opacity: 0; transform: translateY(-8px); } }
+  body { animation: page-in .28s ease both; }
+  body.is-leaving { animation: page-out .2s ease forwards; }
+
+  footer.site { background: var(--primary-deep); color: oklch(94% 0.015 287); padding-block: 36px; }
+  footer.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+  footer.site .f-brand { display: flex; align-items: center; gap: 12px; }
+  footer.site .f-brand .badge { width: 36px; height: 36px; }
+  footer.site .f-brand .zh { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  footer.site .f-brand .en { font-family: var(--font-en); font-style: italic; font-size: 11px; letter-spacing: 0.2em; color: oklch(92% 0.018 287 / 0.6); text-transform: uppercase; }
+  footer.site .copy { color: oklch(92% 0.018 287 / 0.6); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(120%);
+    background: var(--primary-deep); color: oklch(97% 0.012 287);
+    padding: 14px 26px; border-radius: var(--radius-pill); font-size: 13.5px;
+    box-shadow: var(--shadow-lift); transition: transform .35s cubic-bezier(.22,.61,.36,1);
+    z-index: 80; white-space: nowrap;
+  }
+  .toast.is-shown { transform: translateX(-50%) translateY(0); }
+  /* ── Mobile bottom tabbar ───────────────────────────── */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: none; background: oklch(100% 0 0 / 0.94); backdrop-filter: blur(16px) saturate(1.2); border-top: 1px solid var(--border); padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+  .tabbar ul { display: flex; justify-content: space-around; }
+  .tabbar li { flex: 1; }
+  .tabbar li a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; font-size: 11px; color: var(--muted); text-decoration: none; transition: color .15s ease; }
+  .tabbar li.is-active a { color: var(--primary); font-weight: 500; }
+  .tabbar li a svg { width: 22px; height: 22px; }
+  @media (max-width: 640px) { .tabbar { display: block; } body { padding-bottom: 60px; } }
+  /* ── Mobile member nav ──────────────────────────────── */
+  .acc-nav-mobile { display: none; }
+  @media (max-width: 880px) {
+    .acc-side { display: none; }
+    .acc-nav-mobile { display: flex; overflow-x: auto; gap: 8px; padding: 0 0 16px; margin-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .acc-nav-mobile::-webkit-scrollbar { display: none; }
+    .acc-nav-mobile a { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 13px; color: var(--muted); background: var(--surface); flex: none; text-decoration: none; transition: all .15s ease; }
+    .acc-nav-mobile a.is-active { background: var(--primary); border-color: var(--primary); color: white; font-weight: 500; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="brand">
+        <img class="badge" src="images/logo-mark.webp" alt="肌肉淡菜 Muscles Mussels 品牌標誌">
+        <span class="wordmark">
+          <span class="zh">肌肉淡菜</span>
+          <span class="en">Muscles Mussels</span>
+        </span>
+      </a>
+      <nav class="primary">
+        <a href="index.html">首頁</a>
+        <a href="index.html#categories">海鮮分類</a>
+        <a href="index.html#catalog">商品目錄</a>
+        <a href="about.html">品牌故事</a>
+        <a href="index.html#contact">聯絡我們</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn is-active" href="orders.html" aria-label="會員中心">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4.5"/></svg>
+        </a>
+        <a class="icon-btn" href="cart.html" aria-label="購物車">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="dot" id="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap crumb">
+    <a href="index.html">首頁</a><span class="sep">/</span>
+    <a href="login.html">會員中心</a><span class="sep">/</span>
+    <span class="current">我的訂單</span>
+  </div>
+
+  <main class="account-page">
+    <div class="wrap">
+      <div class="account-grid">
+        <aside class="acc-side">
+          <div class="who">
+            <span class="avatar">陳</span>
+            <div>
+              <h2>陳小姐</h2>
+              <p>chen@example.com</p>
+            </div>
+          </div>
+          <ul class="acc-nav">
+            <li><a href="account.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>會員首頁</a></li>
+            <li><a href="orders.html" class="is-active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0h12l-1 13H7L6 7Z"/></svg>我的訂單</a></li>
+            <li><a href="addresses.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.9-7-10a7 7 0 0 1 14 0c0 5.1-7 10-7 10Z"/><circle cx="12" cy="11" r="2.4"/></svg>收貨地址</a></li>
+            <li><a href="favorites.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>我的收藏</a></li>
+            <li><a href="settings.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5c.04-.5.04-1 0-1.5l1.6-1.4-1.6-2.8-2 .6a7.6 7.6 0 0 0-1.3-.75L15.6 5h-3.2l-.5 2.65c-.46.18-.9.43-1.3.75l-2-.6-1.6 2.8 1.6 1.4a6 6 0 0 0 0 1.5l-1.6 1.4 1.6 2.8 2-.6c.4.32.84.57 1.3.75l.5 2.65h3.2l.5-2.65c.46-.18.9-.43 1.3-.75l2 .6 1.6-2.8-1.6-1.4Z"/></svg>帳戶設定</a></li>
+            <li><a href="login.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>登出</a></li>
+          </ul>
+        </aside>
+
+        <div class="account-main">
+          <nav class="acc-nav-mobile" aria-label="會員選單">
+            <a href="account.html">會員首頁</a>
+            <a href="orders.html" class="is-active">我的訂單</a>
+            <a href="addresses.html">收貨地址</a>
+            <a href="favorites.html">我的收藏</a>
+            <a href="settings.html">帳戶設定</a>
+          </nav>
+          <h1>我的訂單</h1>
+          <p class="lede">查看訂單進度、配送狀態與歷史採購紀錄。</p>
+
+          <div class="order-tabs" id="order-tabs">
+            <button type="button" class="is-active" data-filter="all">全部</button>
+            <button type="button" data-filter="processing">處理中</button>
+            <button type="button" data-filter="shipping">配送中</button>
+            <button type="button" data-filter="done">已完成</button>
+            <button type="button" data-filter="cancelled">已取消</button>
+          </div>
+
+          <div class="order-list" id="order-list">
+
+            <article class="order-card" data-status="shipping">
+              <div class="head">
+                <div><span class="id">#MM-20260603-0142</span><span class="sep">·</span>2026/06/03 下單</div>
+                <span class="status-pill is-shipping">配送中</span>
+              </div>
+              <div class="body">
+                <div class="items">
+                  <div class="ph"><img src="images/p-mussel-l.webp" alt="活體淡菜大規格 L"></div>
+                  <div class="ph"><img src="images/p-oyster.webp" alt="日本兵庫縣生食級生蠔"><span class="more">+1</span></div>
+                </div>
+                <p class="summary-text">活體淡菜・大規格 L × 5kg、<strong>另 2 項商品</strong></p>
+                <div class="total"><div class="label">訂單金額</div><div class="amount tabular">$3,720</div></div>
+                <div class="actions">
+                  <button class="btn btn-outline" type="button" data-action="track">追蹤物流</button>
+                  <button class="btn btn-outline" type="button" data-action="detail">查看詳情</button>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-track">
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">訂單成立</span></div>
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">備貨中</span></div>
+                  <div class="step is-current"><span class="dot">●</span><span class="label">冷鏈配送中</span></div>
+                  <div class="step"><span class="dot">4</span><span class="label">簽收完成</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="order-card" data-status="processing">
+              <div class="head">
+                <div><span class="id">#MM-20260606-0167</span><span class="sep">·</span>2026/06/06 下單</div>
+                <span class="status-pill is-processing">處理中</span>
+              </div>
+              <div class="body">
+                <div class="items">
+                  <div class="ph"><img src="images/p-barnacle.webp" alt="馬祖佛手藤壺"></div>
+                </div>
+                <p class="summary-text">佛手藤壺 × 1盒</p>
+                <div class="total"><div class="label">訂單金額</div><div class="amount tabular">$1,100</div></div>
+                <div class="actions">
+                  <button class="btn btn-outline" type="button" data-action="cancel">取消訂單</button>
+                  <button class="btn btn-outline" type="button" data-action="detail">查看詳情</button>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-track">
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">訂單成立</span></div>
+                  <div class="step is-current"><span class="dot">●</span><span class="label">備貨中</span></div>
+                  <div class="step"><span class="dot">3</span><span class="label">冷鏈配送中</span></div>
+                  <div class="step"><span class="dot">4</span><span class="label">簽收完成</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="order-card" data-status="done">
+              <div class="head">
+                <div><span class="id">#MM-20260521-0098</span><span class="sep">·</span>2026/05/21 下單</div>
+                <span class="status-pill is-done">已完成</span>
+              </div>
+              <div class="body">
+                <div class="items">
+                  <div class="ph"><img src="images/p-mussel-m.webp" alt="活體淡菜中規格 M"></div>
+                  <div class="ph"><img src="images/p-beer.webp" alt="老陳啤"><span class="more">+1</span></div>
+                </div>
+                <p class="summary-text">活體淡菜・中規格 M × 5kg、<strong>另 2 項商品</strong></p>
+                <div class="total"><div class="label">訂單金額</div><div class="amount tabular">$2,030</div></div>
+                <div class="actions">
+                  <button class="btn btn-accent" type="button" data-action="reorder">再次購買</button>
+                  <button class="btn btn-outline" type="button" data-action="detail">查看詳情</button>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-track">
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">訂單成立</span></div>
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">備貨中</span></div>
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">冷鏈配送中</span></div>
+                  <div class="step is-done"><span class="dot">✓</span><span class="label">簽收完成</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="order-card" data-status="cancelled">
+              <div class="head">
+                <div><span class="id">#MM-20260418-0061</span><span class="sep">·</span>2026/04/18 下單</div>
+                <span class="status-pill is-cancelled">已取消</span>
+              </div>
+              <div class="body">
+                <div class="items">
+                  <div class="ph"><img src="images/p-mussel-s.webp" alt="活體淡菜小規格 S"></div>
+                </div>
+                <p class="summary-text">活體淡菜・小規格 S × 5kg（會員主動取消）</p>
+                <div class="total"><div class="label">訂單金額</div><div class="amount tabular">$1,550</div></div>
+                <div class="actions">
+                  <button class="btn btn-accent" type="button" data-action="reorder">再次購買</button>
+                  <button class="btn btn-outline" type="button" data-action="detail">查看詳情</button>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="empty-orders" id="empty-orders">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0h12l-1 13H7L6 7Z"/></svg>
+            <p>這個分類目前沒有訂單紀錄。</p>
+            <a class="btn btn-accent" href="index.html#catalog">前往商品目錄</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="f-brand">
+        <img class="badge" src="images/logo-mark.webp" alt="" aria-hidden="true">
+        <span><span class="zh" style="display:block">肌肉淡菜</span><span class="en">Muscles Mussels</span></span>
+      </div>
+      <span class="copy">© 2026 肌肉淡菜 Muscles Mussels · 馬祖高登海域 領有執照合法淡菜養殖場</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">操作成功</div>
+
+<script>
+  const tabs = document.querySelectorAll('#order-tabs button');
+  const cards = document.querySelectorAll('.order-card');
+  const emptyState = document.getElementById('empty-orders');
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-shown');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-shown'), 2200);
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.toggle('is-active', t === tab));
+    const filter = tab.dataset.filter;
+    let visible = 0;
+    cards.forEach(card => {
+      const show = filter === 'all' || card.dataset.status === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) visible += 1;
+    });
+    emptyState.classList.toggle('is-shown', visible === 0);
+  }));
+
+  document.getElementById('order-list').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const orderId = btn.closest('.order-card').querySelector('.id').textContent;
+    const messages = {
+      track:   `已開啟 ${orderId} 的物流追蹤`,
+      detail:  `已開啟 ${orderId} 的訂單詳情`,
+      reorder: `已將 ${orderId} 的商品加入購物車`,
+      cancel:  `已送出 ${orderId} 的取消申請`,
+    };
+    showToast(messages[btn.dataset.action] || '操作成功');
+  });
+
+  // Page exit transitions
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto')) return;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, 200);
+    });
+  });
+</script>
+
+<nav class="tabbar" aria-label="主要功能">
+  <ul>
+    <li><a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>商品
+    </a></li>
+    <li><a href="index.html#search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>搜尋
+    </a></li>
+    <li><a href="cart.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>購物車
+    </a></li>
+    <li class="is-active"><a href="account.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的
+    </a></li>
+  </ul>
+</nav>
+</body>
+</html>
