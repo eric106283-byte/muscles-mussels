@@ -283,6 +283,27 @@
     }
   }
 
+  @media (max-width: 760px) {
+    .hero .wrap {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-block: clamp(36px, 7vw, 56px);
+    }
+    .hero-art {
+      aspect-ratio: 16 / 9;
+      max-height: 260px;
+      border-radius: 18px;
+    }
+    .hero h1 { font-size: clamp(32px, 8vw, 46px); }
+    .hero p.lede { font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .hero-art { max-height: 210px; border-radius: 14px; }
+    .hero p.lede { display: none; }
+    .hero .cta-row { margin-top: 22px; }
+    .btn { font-size: 14px; padding: 12px 24px; }
+  }
+
   /* ---------------------------------------------------------- */
   /* Trust strip                                                  */
   /* ---------------------------------------------------------- */
